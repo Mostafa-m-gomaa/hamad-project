@@ -1,0 +1,233 @@
+.bachelor {
+  width: 100%;
+  padding-top: 100px;
+  padding-bottom: 50px;
+  background-color: rgb(226, 229, 231);
+  min-height: 100vh;
+}
+.bachelor .container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.bachelor .container h2 {
+  font-size: 30px;
+  background-color: var(--my-color);
+  color: white;
+  border-radius: 10px;
+}
+.bachelor .container form {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  align-items: center;
+}
+.bachelor .container form .btn-31,
+.bachelor .container form .btn-31 *,
+.bachelor .container form .btn-31 :after,
+.bachelor .container form .btn-31 :before,
+.bachelor .container form .btn-31:after,
+.bachelor .container form .btn-31:before {
+  border: 0 solid;
+  box-sizing: border-box;
+}
+.bachelor .container form .btn-31 {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: button;
+  background-color: #000;
+  background-image: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 100%;
+  font-weight: 900;
+  line-height: 1.5;
+  margin: 0;
+  -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
+  padding: 0;
+}
+.bachelor .container form .btn-31:disabled {
+  cursor: default;
+}
+.bachelor .container form .btn-31:-moz-focusring {
+  outline: auto;
+}
+.bachelor .container form .btn-31 svg {
+  display: block;
+  vertical-align: middle;
+}
+.bachelor .container form .btn-31 [hidden] {
+  display: none;
+}
+.bachelor .container form .btn-31 {
+  border-width: 1px;
+  padding: 1rem 2rem;
+  position: relative;
+  text-transform: uppercase;
+}
+.bachelor .container form .btn-31:before {
+  --progress: 100%;
+  background: #fff;
+  -webkit-clip-path: polygon(100% 0, var(--progress) var(--progress), 0 100%, 100% 100%);
+  clip-path: polygon(100% 0, var(--progress) var(--progress), 0 100%, 100% 100%);
+  content: "";
+  inset: 0;
+  position: absolute;
+  transition: -webkit-clip-path 0.2s ease;
+  transition: clip-path 0.2s ease;
+  transition: clip-path 0.2s ease, -webkit-clip-path 0.2s ease;
+}
+.bachelor .container form .btn-31:hover:before {
+  --progress: 0%;
+}
+.bachelor .container form .btn-31 .text-container {
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+.bachelor .container form .btn-31 .text {
+  display: block;
+  font-weight: 900;
+  mix-blend-mode: difference;
+  position: relative;
+}
+.bachelor .container form .btn-31:hover .text {
+  animation: move-up-alternate 0.3s ease forwards;
+}
+@keyframes move-up-alternate {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(80%);
+  }
+  51% {
+    transform: translateY(-80%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.bachelor .container form .custum-file-upload {
+  height: 200px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  gap: 20px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #e8e8e8;
+  background-color: #212121;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0px 48px 35px -48px #e8e8e8;
+}
+.bachelor .container form .custum-file-upload .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bachelor .container form .custum-file-upload .icon svg {
+  height: 80px;
+  fill: #e8e8e8;
+}
+.bachelor .container form .custum-file-upload .text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bachelor .container form .custum-file-upload .text span {
+  font-weight: 400;
+  color: #e8e8e8;
+}
+.bachelor .container form .custum-file-upload input {
+  display: none;
+}
+.bachelor .container form .done {
+  background-color: rgb(65, 204, 9);
+}
+.bachelor .dropdown {
+  max-width: 13em;
+  position: relative;
+  width: 100%;
+}
+.bachelor .dropdown-btn {
+  background: #1d1f24;
+  font-size: 18px;
+  width: 100%;
+  border: none;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7em 0.5em;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+.bachelor .arrow {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  transition: transform ease-in-out 0.3s;
+}
+.bachelor .dropdown-content {
+  list-style: none;
+  position: absolute;
+  top: 3.2em;
+  width: 100%;
+  visibility: hidden;
+  overflow: hidden;
+}
+.bachelor .dropdown-content li {
+  background: #2f3238;
+  border-radius: 0.5em;
+  position: relative;
+  left: 100%;
+  transition: 0.5s;
+  transition-delay: calc(60ms * var(--delay));
+  overflow: hidden;
+}
+.bachelor .dropdown:hover .dropdown-content li {
+  left: 0;
+}
+.bachelor .dropdown:hover .dropdown-content {
+  visibility: visible;
+}
+.bachelor .dropdown:hover .dropdown-btn > .arrow {
+  transform: rotate(180deg);
+}
+.bachelor .dropdown-content li:hover {
+  background: #1d1f24;
+}
+.bachelor .dropdown-content li div {
+  display: block;
+  padding: 0.7em 0.5em;
+  color: #fff;
+  margin: 0.1em 0;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 100;
+}
+.bachelor .active {
+  background-color: var(--my-color) !important;
+  color: white;
+}
+.bachelor .require {
+  background-color: #1d1f24;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 15px;
+  color: white;
+  text-transform: capitalize;
+  border-radius: 10px;
+}
+.bachelor .require textarea {
+  border-radius: 10px;
+  padding: 2px;
+  color: black;
+}/*# sourceMappingURL=bach.css.map */

@@ -1,0 +1,118 @@
+@import "../helpers/mixins";
+.nav{
+  position: fixed;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  z-index: 300;
+ 
+   .container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // gap: 60px;
+    padding: 2px 0;
+    @include media(mopile){
+     position: relative;
+         
+                       }
+                       .burger{
+                        display: none;
+                        @include media(mopile){
+                          display: block;
+                          width: 40px;
+                              
+                                            }
+                        
+                       }
+    img{
+      width: 80px;
+      
+    }
+    .list{
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-weight: bold;
+      align-items: center;
+     
+      @include media(mopile){
+        position: absolute;
+        flex-direction: column;
+        gap: 15px;
+        width: 60%;
+        background-color: white;
+        padding: 10px;
+        left: -200%;
+        top: 120px;
+        transition: 0.2s;
+        border: 4px solid var(--my-color);
+        border-radius: 10px;
+        text-align: center;
+            
+                          }
+      a{
+        transition: 0.2s;
+        padding: 5px;
+        border-radius: 5px;
+      }
+      .active{
+        background-color: var(--my-color);
+        color: white;
+      }
+      .sv{
+        background-color: var(--my-color) ;
+        border-radius: 10px;
+        padding: 5px;
+        transition: 0.2s;
+        // width: 70px;
+        color: white;
+        // height: 20px;
+        font-size: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover{
+         padding: 10px;
+        } 
+      }
+
+      .library{
+        position: relative;
+        &:hover .library-list{
+          top: 43px;
+        }
+        .library-list{
+          position: absolute;
+          top: -810px;
+          text-align: center;
+          padding: 5px 10px;
+          min-width: fit-content;
+          width: 250px;
+          background-color: white;
+          color: rgb(255, 255, 255);
+          border: 2px solid var(--my-color);
+          border-radius: 8px;
+          left: -20px;
+          transition: 0.3s;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          z-index: 100;
+          a{
+            background-color: var(--my-color);
+            // width: fit-content;
+          }
+        }
+      }
+    }
+    .list-show{
+      @include media(mopile){
+     left: 50%;
+     transform: translateX(-50%);
+    // left: 70px;
+            
+                          }
+    }
+   }
+}
