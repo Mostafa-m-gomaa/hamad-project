@@ -19,10 +19,33 @@
 .bachelor .container form {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   gap: 15px;
-  align-items: center;
+}
+.bachelor .container form .files-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+.bachelor .container form .first-col {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+@media (min-width: 768px) {
+  .bachelor .container form .files-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1000px) {
+  .bachelor .container form .files-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .bachelor .container form .files-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 .bachelor .container form .btn-31,
 .bachelor .container form .btn-31 *,
@@ -47,6 +70,10 @@
   margin: 0;
   -webkit-mask-image: -webkit-radial-gradient(#000, #fff);
   padding: 0;
+  display: block;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
 }
 .bachelor .container form .btn-31:disabled {
   cursor: default;
@@ -111,8 +138,8 @@
   }
 }
 .bachelor .container form .custum-file-upload {
-  height: 200px;
-  width: 300px;
+  width: 100%;
+  aspect-ratio: 3/2;
   display: flex;
   flex-direction: column;
   align-items: space-between;
@@ -154,6 +181,7 @@
   max-width: 13em;
   position: relative;
   width: 100%;
+  margin: auto;
 }
 .bachelor .dropdown-btn {
   background: #1d1f24;
@@ -215,6 +243,14 @@
 .bachelor .active {
   background-color: var(--my-color) !important;
   color: white;
+}
+.bachelor .requireRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.bachelor .requireRow .require {
+  flex: 1;
 }
 .bachelor .require {
   background-color: #1d1f24;

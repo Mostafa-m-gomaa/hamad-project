@@ -6,17 +6,23 @@ import { AppContext } from "../../App";
 import UploadFileInput from "./UploadFileInput";
 import { countries } from "../../data/data";
 
-const Bachelor = () => {
+const PHD = () => {
   const { login, setLogin, setLoader, route } = useContext(AppContext);
   const [values, setValues] = useState({
     cv: null,
-    high: null,
     personal: null,
     passport: null,
     statement: null,
+    master: null,
+    english: null,
+    recommendation1: null,
+    recommendation2: null,
+    bachelor: null,
+    research: null,
+    experience: null,
     country: "",
-    require: "",
     additionalService: "",
+    require: "",
   });
   const inputs = [
     {
@@ -25,12 +31,7 @@ const Bachelor = () => {
       type: "pdf",
       required: true,
     },
-    {
-      paragraph: "Upload High School Certification",
-      name: "high",
-      type: "pdf",
-      required: true,
-    },
+
     {
       paragraph: "Click to upload Personal Picture",
       name: "personal",
@@ -49,6 +50,43 @@ const Bachelor = () => {
       type: "word",
       required: true,
     },
+    {
+      paragraph: "Upload English Test Results",
+      name: "english",
+      type: "pdf",
+      required: true,
+    },
+    {
+      paragraph: "Upload Two Recommendation Letters",
+      name: "recommendation1",
+      type: "pdf",
+      required: true,
+    },
+
+    {
+      paragraph: "Upload Bachelor's Degree Certificate With Transcript",
+      name: "bachelor",
+      type: "pdf",
+      required: true,
+    },
+    {
+      paragraph: "Upload Master Degree Certificate With Transcript",
+      name: "master",
+      type: "pdf",
+      required: true,
+    },
+    {
+      paragraph: "Upload Research Proposal (word file)",
+      name: "research",
+      type: "word",
+      required: true,
+    },
+    {
+      paragraph: "Upload Experience Letter",
+      name: "experience",
+      type: "pdf",
+      required: true,
+    },
   ];
   const onFileChange = (event, name) => {
     const file = event.target.files[0];
@@ -60,24 +98,26 @@ const Bachelor = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoader(true);
-    if (values.country == "") {
-      toast.error("you should select country");
-      setLoader(false);
-      return;
-    }
     if (sessionStorage.getItem("token")) {
       const formData = new FormData();
-      formData.append("CV", values.cv);
-      formData.append("HighSchoolCertificate", values.high);
       formData.append("PersonalPicture", values.personal);
-      formData.append("Passport", values.passport);
+      formData.append("CV", values.cv);
+      formData.append(
+        "BachelorsDegreeCertificateWithTranscript",
+        values.bachelor
+      );
+      formData.append("MastersDegreeCertificateWithTranscript", values.master);
+      formData.append("EnglishTestResults", values.english);
+      formData.append("TwoRecommendationLetters", values.recommendation1);
+      formData.append("ExperienceLetter", values.experience);
       formData.append("PersonalStatement", values.statement);
-      formData.append("CountryOfStudy", values.country);
+      formData.append("ResearchProposal", values.research);
       formData.append("RequiredSpecialization", values.require);
+      formData.append("CountryOfStudy", values.country);
+      formData.append("Passport", values.passport);
       formData.append("additionalService", values.additionalService);
-
       try {
-        const response = await fetch(`${route}/bechlor`, {
+        const response = await fetch(`${route}/phd`, {
           method: "POST",
           body: formData,
           headers: {
@@ -109,7 +149,7 @@ const Bachelor = () => {
   return (
     <div className="bachelor">
       <div className="container">
-        <h2>Apply to Bachelor</h2>
+        <h2>Apply to PHD</h2>
         <form action="" onSubmit={handleSubmit}>
           <div className="dropdown" tabIndex="0">
             <div className="dropdown-btn" aria-haspopup="menu">
@@ -179,4 +219,4 @@ const Bachelor = () => {
   );
 };
 
-export default Bachelor;
+export default PHD;
