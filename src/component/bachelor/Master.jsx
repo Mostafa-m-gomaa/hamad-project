@@ -97,7 +97,7 @@ const Master = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoader(true);
-    if (sessionStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       const formData = new FormData();
       formData.append("CV", values.cv);
       formData.append("HighSchoolCertificate", values.high);
@@ -120,7 +120,7 @@ const Master = () => {
           method: "POST",
           body: formData,
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }).then((res) => res.json());
         console.log(response);
@@ -138,7 +138,7 @@ const Master = () => {
     }
   };
   useEffect(() => {
-    if (sessionStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       setLogin(true);
     } else {
       toast.error("you should login first");

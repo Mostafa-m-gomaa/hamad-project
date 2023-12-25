@@ -44,7 +44,7 @@ const UploadFileInput = ({
         onChange={(e) => {
           onChange(e, name);
         }}
-        required
+        required={required}
         accept={accepted}
         type="file"
       />

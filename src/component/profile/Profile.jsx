@@ -16,17 +16,16 @@ const Profile = () => {
   useEffect(() => {
     fetch(`${route}/users/getMe`, {
       headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => res.json())
       .then((data) => {
         setUser(data.data);
-        console.log(data.data);
         if (data.data.type === "Bachelor") {
-          fetch(`${route}/bechlor`, {
+          fetch(`${route}/bachelor`, {
             headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           })
             .then((res) => res.json())
@@ -39,7 +38,7 @@ const Profile = () => {
         } else if (data.data.type === "Master") {
           fetch(`${route}/master`, {
             headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           })
             .then((res) => res.json())
@@ -52,7 +51,7 @@ const Profile = () => {
         } else if (data.data.type === "phd") {
           fetch(`${route}/phd`, {
             headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           })
             .then((res) => res.json())
@@ -78,11 +77,11 @@ const Profile = () => {
 
           <div className="infotop">
             Welcome <br />
-            {user.username}
+            {user?.username}
             <br />
-            {user.email}
+            {user?.email}
             <br />
-            request type <br /> {user.type}
+            request type <br /> {user?.type}
           </div>
         </div>
         <div className="requests">

@@ -98,7 +98,7 @@ const PHD = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoader(true);
-    if (sessionStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       const formData = new FormData();
       formData.append("PersonalPicture", values.personal);
       formData.append("CV", values.cv);
@@ -121,7 +121,7 @@ const PHD = () => {
           method: "POST",
           body: formData,
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }).then((res) => res.json());
         console.log(response);
@@ -139,7 +139,7 @@ const PHD = () => {
     }
   };
   useEffect(() => {
-    if (sessionStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       setLogin(true);
     } else {
       toast.error("you should login first");

@@ -16,20 +16,45 @@ import Profile from "./component/profile/Profile";
 import Master from "./component/bachelor/Master";
 import PHD from "./component/bachelor/PHD";
 import RequestDetails from "./component/requestDetails/RequestDetails";
+import Notifications from "./component/notifications/Notifications";
 export const AppContext = createContext();
 function App() {
   const [login, setLogin] = useState(false);
   const [token, setToken] = useState("");
   const [loader, setLoader] = useState(false);
   const [route, setRoute] = useState("https://api.hamad-edu.com/api/v1");
-
+  const [notifications, setNotifications] = useState([]);
   useEffect(() => {
-    if (sessionStorage.getItem("token")) {
-      setToken(sessionStorage.getItem("token"));
+    if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
       setLogin(true);
     }
   }, [login]);
+  useEffect(() => {
+    const getNotification = () => {
+      if (localStorage.getItem("token")) {
+        fetch(`${route}/notification/myNotification`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setNotifications(data.notifications);
+          })
+          .catch((err) => console.log(err));
+      }
+    };
+    getNotification();
 
+    const inter = setInterval(() => {
+      getNotification();
+    }, 10000);
+
+    return () => {
+      clearInterval(inter);
+    };
+  }, [localStorage.getItem("token"), login, route]);
   useEffect(() => {
     AOS.init();
   }, []);
@@ -45,6 +70,8 @@ function App() {
         setLoader,
         route,
         setRoute,
+        notifications,
+        setNotifications,
       }}
     >
       <>
@@ -72,6 +99,7 @@ function App() {
           <Route path="/phd" element={<PHD />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/request-details/:id" element={<RequestDetails />} />
+          <Route path="/notifications" element={<Notifications />} />
         </Routes>
       </>
     </AppContext.Provider>
