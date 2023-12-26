@@ -16,6 +16,7 @@ import TicketStep from "./steps/TicketStep";
 import ApplayVisaStep from "./steps/ApplayVisaStep";
 import AirportPickUp from "./steps/AirportPickUp";
 import DoneStep from "./steps/DoneStep";
+import Orders from "./Orders";
 const RequestDetails = () => {
   const { setLoader, route } = useContext(AppContext);
   const [requestDetails, setRequestDetails] = useState({});
@@ -89,7 +90,6 @@ const RequestDetails = () => {
     }
   }, [request, route]);
   const order = getRequestStateOrder(request.currentStep);
-  console.log(requestDetails);
   return (
     <>
       <div className="timeline container">
@@ -107,7 +107,7 @@ const RequestDetails = () => {
             currentStepIndx={order}
             details={requestDetails}
           />
-          <MohereStep id={id} myData={user} currentStepIndx={order} />
+          <MohereStep id={id} currentStepIndx={order} />
           <VisaFees id={id} currentStepIndx={order} />
           <EMGSStep currentStepIndx={order} />
           <RegistrationFees currentStepIndx={order} id={id} />
@@ -117,6 +117,7 @@ const RequestDetails = () => {
           <AirportPickUp currentStepIndx={order} />
           <DoneStep currentStepIndx={order} />
         </div>
+        <Orders myData={user} />
       </div>
     </>
   );

@@ -60,7 +60,7 @@ function Nav(props) {
   }, []);
   useEffect(() => {
     // i have array of notifications every one have isRead key i want to get count of notifications that have isRead = false
-    const count = notifications.filter((notification) => {
+    const count = notifications?.filter((notification) => {
       return notification.isRead === false;
     }).length;
     setNotRead(count);
@@ -103,7 +103,11 @@ function Nav(props) {
               to="/notifications"
             >
               <IoIosNotifications />
-              <span>{notRead && notRead}</span>
+              {notRead !== 0 && notRead !== undefined && (
+                <>
+                  <span>{notRead}</span>
+                </>
+              )}
             </Link>
           ) : null}
         </div>

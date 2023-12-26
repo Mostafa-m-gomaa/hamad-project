@@ -15,7 +15,7 @@ const VisaFees = ({ id, currentStepIndx }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if (data.session.url) window.open(data.session.url);
       })
       .catch((err) => {
         console.log(err);

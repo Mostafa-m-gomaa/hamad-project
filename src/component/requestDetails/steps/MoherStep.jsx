@@ -4,7 +4,7 @@ import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
 
-const MohereStep = ({ myData, id, currentStepIndx }) => {
+const MohereStep = ({ id, currentStepIndx }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setLoader, route } = useContext(AppContext);
   const [file, setFile] = useState(null);
@@ -14,7 +14,7 @@ const MohereStep = ({ myData, id, currentStepIndx }) => {
     const formData = new FormData();
     formData.append("MOHERE", file);
     setLoader(true);
-    fetch(`${route}/progress/uploadMOHERE/${id}/${myData?.type}`, {
+    fetch(`${route}/progress/uploadMOHERE/${id}`, {
       method: "POST",
       body: formData,
       headers: {
