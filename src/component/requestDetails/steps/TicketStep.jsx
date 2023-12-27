@@ -53,7 +53,7 @@ const TicketStep = ({ id, currentStepIndx }) => {
                 setIsModalOpen(true);
               }}
             >
-              Upload
+              Upload Ticket
             </button>
           </div>
         </div>

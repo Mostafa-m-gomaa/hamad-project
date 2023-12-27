@@ -161,7 +161,6 @@
 .clearfix {
   clear: both;
 }
-.timeline-content .text .done,
 .timeline-content .text .late {
   margin: 0;
   color: white;
@@ -178,6 +177,12 @@
   font-size: 50px;
   backdrop-filter: blur(10px);
   color: black;
+}
+.timeline-content .done {
+  position: absolute;
+  right: 15px;
+  top: 0px;
+  font-size: 25px;
 }
 .timeline-content .text .late svg {
   animation: spin 2s linear infinite;

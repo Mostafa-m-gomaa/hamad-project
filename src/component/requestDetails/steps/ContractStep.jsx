@@ -50,14 +50,21 @@ const ContractStep = ({ details, id, currentStepIndx }) => {
             reupload the signed contact
           </p>
           <div>
-            <button disabled={contract == null}>Download</button>
+            <button
+              onClick={() => {
+                window.open(contract);
+              }}
+              disabled={contract == null}
+            >
+              Download Contact
+            </button>
             <button
               disabled={contract == null}
               onClick={() => {
                 setIsModalOpen(true);
               }}
             >
-              Reupload
+              Upload signed contract
             </button>
           </div>
         </div>

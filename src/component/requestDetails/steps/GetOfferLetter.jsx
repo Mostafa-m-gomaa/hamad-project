@@ -14,7 +14,14 @@ const GetOfferLetter = ({ details, currentStepIndx }) => {
           <h2>Receive offer letter</h2>
           <p>Wait until the offer letter is uploaded by our admins</p>
           <div>
-            <button disabled={offerLetter == null}>Download</button>
+            <button
+              onClick={() => {
+                window.open(offerLetter);
+              }}
+              disabled={offerLetter == null}
+            >
+              Download offer letter
+            </button>
           </div>
         </div>
       </div>

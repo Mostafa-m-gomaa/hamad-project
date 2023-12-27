@@ -53,7 +53,7 @@ const MohereStep = ({ id, currentStepIndx }) => {
                 setIsModalOpen(true);
               }}
             >
-              Upload
+              Upload mohere
             </button>
           </div>
         </div>

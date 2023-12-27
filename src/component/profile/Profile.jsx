@@ -81,7 +81,6 @@ const Profile = () => {
             <br />
             {user?.email}
             <br />
-            request type <br /> {user?.type}
           </div>
         </div>
         <div className="requests">

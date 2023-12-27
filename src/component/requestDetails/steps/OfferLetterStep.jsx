@@ -54,7 +54,7 @@ const OfferLetterStep = ({ details, id, currentStepIndx }) => {
                 setIsModalOpen(true);
               }}
             >
-              Reupload
+              Upload signed offer letter
             </button>
           </div>
         </div>
