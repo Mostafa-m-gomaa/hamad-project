@@ -11,8 +11,10 @@ const SignUp = () => {
   const { route, setLoader } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -25,6 +27,7 @@ const SignUp = () => {
           email: email,
           password: password,
           username: userName,
+          phone: phone,
           passwordConfirm: confirmPassword,
         }),
         headers: {
@@ -70,12 +73,21 @@ const SignUp = () => {
           />
           <input
             required=""
+            onChange={(e) => setPhone(e.target.value)}
+            className="input"
+            type="text"
+            name="phone"
+            id="phone"
+            placeholder="phone"
+          />
+          <input
+            required=""
             onChange={(e) => setPassword(e.target.value)}
             className="input"
             type="password"
             name="password"
             id="password"
-            placeholder="Password"
+            placeholder="Password-Confirm"
           />
           <input
             required=""

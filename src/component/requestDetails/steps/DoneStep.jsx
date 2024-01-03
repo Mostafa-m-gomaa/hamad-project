@@ -1,9 +1,6 @@
 import StepState from "./StepState";
 
-const DoneStep = ({ currentStepIndx }) => {
-  let state = "late";
-  if (currentStepIndx === 12) state = "current";
-  if (currentStepIndx > 12) state = "done";
+const DoneStep = ({ state }) => {
   return (
     <>
       <div className="left">

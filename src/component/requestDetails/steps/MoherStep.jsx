@@ -4,7 +4,7 @@ import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
 
-const MohereStep = ({ id, currentStepIndx }) => {
+const MohereStep = ({ id, state }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setLoader, route } = useContext(AppContext);
   const [file, setFile] = useState(null);
@@ -37,9 +37,7 @@ const MohereStep = ({ id, currentStepIndx }) => {
         setLoader(false);
       });
   };
-  let state = "late";
-  if (currentStepIndx === 4) state = "current";
-  if (currentStepIndx > 4) state = "done";
+
   return (
     <>
       <div className="left">

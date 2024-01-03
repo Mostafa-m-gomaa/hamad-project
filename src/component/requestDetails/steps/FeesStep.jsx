@@ -3,7 +3,7 @@ import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
 
-const FeesStep = ({ details, currentStepIndx, id }) => {
+const FeesStep = ({ details, state, id }) => {
   const { setLoader, route } = useContext(AppContext);
   const onSubmit = () => {
     setLoader(true);
@@ -27,9 +27,7 @@ const FeesStep = ({ details, currentStepIndx, id }) => {
         setLoader(false);
       });
   };
-  let state = "late";
-  if (currentStepIndx === 1) state = "current";
-  if (currentStepIndx > 1) state = "done";
+
   return (
     <>
       <div className="right">

@@ -1,9 +1,6 @@
 import StepState from "./StepState";
 
-const AirportPickUp = ({ currentStepIndx }) => {
-  let state = "late";
-  if (currentStepIndx === 11) state = "current";
-  if (currentStepIndx > 11) state = "done";
+const AirportPickUp = ({ state }) => {
   return (
     <>
       <div className="right">

@@ -10,6 +10,7 @@ import { getRequestStateOrder } from "../../actions/getRequestStateOrder";
 import GetOfferLetter from "./steps/GetOfferLetter";
 import VisaFees from "./steps/VisaFees";
 import EMGSStep from "./steps/EMGSStep";
+import Eval from "./steps/Eval";
 import RegistrationFees from "./steps/RegistrationFees";
 import FinalAcceptaion from "./steps/FinalAcceptaion";
 import TicketStep from "./steps/TicketStep";
@@ -17,6 +18,7 @@ import ApplayVisaStep from "./steps/ApplayVisaStep";
 import AirportPickUp from "./steps/AirportPickUp";
 import DoneStep from "./steps/DoneStep";
 import Orders from "./Orders";
+import MohereApproval from "./steps/MohereApproval";
 const RequestDetails = () => {
   const { setLoader, route } = useContext(AppContext);
   const [requestDetails, setRequestDetails] = useState({});
@@ -83,39 +85,53 @@ const RequestDetails = () => {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           if (data.data) {
             setRequestDetails(data.data);
           }
-        });
+        })
+        .catch((err) => console.log(err));
     }
   }, [request, route]);
   const order = getRequestStateOrder(request.currentStep);
+  const getStepState = (current) => {
+    let state = "late";
+    if (order === current) state = "current";
+    if (current < order) state = "done";
+    return state;
+  };
   return (
     <>
       <div className="timeline container">
         <h2>Current state of step : {request.currentStep}</h2>
         <div className="timeline-content">
           <ContractStep
-            currentStepIndx={order}
+            state={getStepState(0)}
             details={requestDetails}
             id={id}
           />
-          <FeesStep currentStepIndx={order} details={requestDetails} id={id} />
-          <GetOfferLetter currentStepIndx={order} details={requestDetails} />
+          <FeesStep state={getStepState(1)} details={requestDetails} id={id} />
+          <GetOfferLetter state={getStepState(2)} details={requestDetails} />
           <OfferLetterStep
             id={id}
-            currentStepIndx={order}
+            state={getStepState(3)}
             details={requestDetails}
           />
-          <MohereStep id={id} currentStepIndx={order} />
-          <VisaFees id={id} currentStepIndx={order} />
-          <EMGSStep currentStepIndx={order} />
-          <RegistrationFees currentStepIndx={order} id={id} />
-          <FinalAcceptaion currentStepIndx={order} details={requestDetails} />
-          <TicketStep currentStepIndx={order} id={id} />
-          <ApplayVisaStep currentStepIndx={order} id={id} />
-          <AirportPickUp currentStepIndx={order} />
-          <DoneStep currentStepIndx={order} />
+          <MohereStep id={id} state={getStepState(4)} />
+          <MohereApproval
+            details={requestDetails}
+            id={id}
+            state={getStepState(5)}
+          />
+          <Eval details={requestDetails} id={id} state={getStepState(6)} />
+          <VisaFees id={id} state={getStepState(7)} />
+          <EMGSStep state={getStepState(8)} details={requestDetails} />
+          <RegistrationFees state={getStepState(9)} id={id} />
+          <FinalAcceptaion state={getStepState(10)} details={requestDetails} />
+          <TicketStep state={getStepState(11)} id={id} />
+          <ApplayVisaStep state={getStepState(12)} id={id} />
+          <AirportPickUp state={getStepState(13)} />
+          <DoneStep state={getStepState(14)} />
         </div>
         <Orders myData={user} />
       </div>

@@ -17,6 +17,7 @@ import Master from "./component/bachelor/Master";
 import PHD from "./component/bachelor/PHD";
 import RequestDetails from "./component/requestDetails/RequestDetails";
 import Notifications from "./component/notifications/Notifications";
+import GoogleTranslate from "./component/GoogleTranslate";
 export const AppContext = createContext();
 function App() {
   const [login, setLogin] = useState(false);
@@ -86,6 +87,7 @@ function App() {
             </div>
           </div>
         ) : null}
+
         <ToastContainer />
         <Nav />
         <Routes>

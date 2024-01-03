@@ -1,23 +1,23 @@
 import StepState from "./StepState";
 
-const EMGSStep = ({ state, details }) => {
-  const { EMGS } = details;
+const MohereApproval = ({ id, state, details }) => {
+  const { MOHEREApproval } = details;
   return (
     <>
-      <div className="left">
+      <div className="right">
         <div className="text">
           <StepState state={state} />
-          <h2>EMGS Approval</h2>
-          <p>wait until we get EMGS Approval</p>
+          <h2>Download mohere approval</h2>
+          <p>wait until we get mohere approval and upload it</p>
           <div>
             <button
-              disabled={!EMGS}
+              disabled={!MOHEREApproval}
               onClick={() => {
                 // setIsModalOpen(true);
-                window.open(EMGS);
+                window.open(MOHEREApproval);
               }}
             >
-              download EMGS
+              download mohere approval
             </button>
           </div>
         </div>
@@ -27,4 +27,4 @@ const EMGSStep = ({ state, details }) => {
   );
 };
 
-export default EMGSStep;
+export default MohereApproval;

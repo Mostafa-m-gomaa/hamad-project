@@ -4,7 +4,7 @@ import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
 
-const ContractStep = ({ details, id, currentStepIndx }) => {
+const ContractStep = ({ details, id, state }) => {
   const { contract } = details;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setLoader, route } = useContext(AppContext);
@@ -36,9 +36,7 @@ const ContractStep = ({ details, id, currentStepIndx }) => {
         setLoader(false);
       });
   };
-  let state = "late";
-  if (currentStepIndx === 0) state = "current";
-  if (currentStepIndx > 0) state = "done";
+
   return (
     <>
       <div className="left">

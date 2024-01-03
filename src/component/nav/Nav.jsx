@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import burger from "../../assets/burger.png";
 import { CgProfile } from "react-icons/cg";
 import { IoIosNotifications } from "react-icons/io";
+import GoogleTranslate from "../GoogleTranslate";
+import { FaEarthAfrica } from "react-icons/fa6";
 
 function Nav(props) {
   const history = useNavigate();
@@ -15,6 +17,7 @@ function Nav(props) {
   const { login, setLogin } = useContext(AppContext);
   const [active, setActive] = useState("");
   const [notRead, setNotRead] = useState(0);
+  const [translateOpen, setTranslateOpen] = useState(false);
   const clickBurger = () => {
     document.querySelector(".nav .list").classList.toggle("list-show");
   };
@@ -67,8 +70,18 @@ function Nav(props) {
   }, [notifications]);
   return (
     <div className="nav">
+      <div
+        style={{
+          display: translateOpen ? "flex" : "none",
+        }}
+        className="googleTranslate"
+      >
+        <GoogleTranslate onClose={() => setTranslateOpen(false)} />
+      </div>
       <div className="container">
-        <img src={logo} alt="" />
+        <Link to={"/"}>
+          <img src={logo} alt="" />
+        </Link>
         <div className="list">
           <Link onClick={clickOnLink} className="active" to="/">
             Home
@@ -110,6 +123,12 @@ function Nav(props) {
               )}
             </Link>
           ) : null}
+          <button
+            onClick={() => setTranslateOpen(true)}
+            className="sv notificationsIcon"
+          >
+            <FaEarthAfrica />
+          </button>
         </div>
 
         <img onClick={clickBurger} src={burger} className="burger" alt="" />

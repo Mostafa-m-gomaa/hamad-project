@@ -4,10 +4,13 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { AppContext } from "../../App";
 import UploadFileInput from "./UploadFileInput";
-import { countries } from "../../data/data";
+import { useNavigate } from "react-router-dom";
 
 const PHD = () => {
   const { login, setLogin, setLoader, route } = useContext(AppContext);
+  const [countries, setCountries] = useState([]);
+  const [services, setServices] = useState([]);
+  const nav = useNavigate();
   const [values, setValues] = useState({
     cv: null,
     personal: null,
@@ -98,6 +101,13 @@ const PHD = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoader(true);
+    const servicesss = [];
+    const checkboxes = document.querySelectorAll(
+      'input[type="checkbox"][name="services"]:checked'
+    );
+    Array.from(checkboxes).map(function (checkbox) {
+      return servicesss.push(checkbox.value);
+    });
     if (localStorage.getItem("token")) {
       const formData = new FormData();
       formData.append("PersonalPicture", values.personal);
@@ -115,7 +125,7 @@ const PHD = () => {
       formData.append("RequiredSpecialization", values.require);
       formData.append("CountryOfStudy", values.country);
       formData.append("Passport", values.passport);
-      formData.append("additionalService", values.additionalService);
+      formData.append("additionalService", servicesss.join("/"));
       try {
         const response = await fetch(`${route}/phd`, {
           method: "POST",
@@ -128,6 +138,7 @@ const PHD = () => {
         setLoader(false);
         if (response.message == "Request sent successfully") {
           toast.success("Request sent successfully");
+          nav("/profile");
         } else if (response.status == "fail") {
           toast.error(response.message);
         }
@@ -141,10 +152,23 @@ const PHD = () => {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setLogin(true);
+      fetch(`${route}/countryOfStudy`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.data) {
+            setCountries(data.data);
+          }
+        });
+      fetch(`${route}/service`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.data) {
+            setServices(data.data);
+          }
+        });
     } else {
       toast.error("you should login first");
     }
-    console.log(login);
   }, []);
   return (
     <div className="bachelor">
@@ -165,7 +189,7 @@ const PHD = () => {
                     onClick={handleCountry}
                     className={values.country === country ? "active" : ""}
                   >
-                    {country}
+                    {country.title}
                   </div>
                 </li>
               ))}
@@ -185,14 +209,17 @@ const PHD = () => {
             </div>
             <div className="require">
               Additional Service
-              <textarea
-                onChange={(e) =>
-                  setValues({ ...values, additionalService: e.target.value })
-                }
-                cols="35"
-                rows="5"
-                placeholder="write here"
-              ></textarea>
+              {services.map((service) => (
+                <div key={service.title}>
+                  <input
+                    type="checkbox"
+                    name="services"
+                    id={service.title}
+                    value={service.title}
+                  />
+                  <label htmlFor={service.title}>{service.title}</label>
+                </div>
+              ))}
             </div>
           </div>
           <div className="files-container">

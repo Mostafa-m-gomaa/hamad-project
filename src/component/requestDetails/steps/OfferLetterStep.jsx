@@ -4,7 +4,7 @@ import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
 
-const OfferLetterStep = ({ details, id, currentStepIndx }) => {
+const OfferLetterStep = ({ details, id, state }) => {
   const { offerLetter } = details;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setLoader, route } = useContext(AppContext);
@@ -37,9 +37,7 @@ const OfferLetterStep = ({ details, id, currentStepIndx }) => {
         setLoader(false);
       });
   };
-  let state = "late";
-  if (currentStepIndx === 3) state = "current";
-  if (currentStepIndx > 3) state = "done";
+
   return (
     <>
       <div className="right">

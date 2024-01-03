@@ -1,24 +1,23 @@
 import StepState from "./StepState";
 
-const GetOfferLetter = ({ details, state }) => {
-  const { offerLetter } = details;
-
+const Eval = ({ id, state, details }) => {
+  const { EVAL } = details;
   return (
     <>
       <div className="left">
         <div className="text">
           <StepState state={state} />
-
-          <h2>Receive offer letter</h2>
-          <p>Wait until the offer letter is uploaded by our admins</p>
+          <h2>Download EVAL</h2>
+          <p>wait until we get EVAL and upload it</p>
           <div>
             <button
+              disabled={!EVAL}
               onClick={() => {
-                window.open(offerLetter);
+                // setIsModalOpen(true);
+                window.open(EVAL);
               }}
-              disabled={offerLetter == null}
             >
-              Download offer letter
+              download EVAL
             </button>
           </div>
         </div>
@@ -28,4 +27,4 @@ const GetOfferLetter = ({ details, state }) => {
   );
 };
 
-export default GetOfferLetter;
+export default Eval;

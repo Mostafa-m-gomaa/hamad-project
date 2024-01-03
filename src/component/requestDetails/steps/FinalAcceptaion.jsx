@@ -1,9 +1,6 @@
 import StepState from "./StepState";
 
-const FinalAcceptaion = ({ currentStepIndx }) => {
-  let state = "late";
-  if (currentStepIndx === 8) state = "current";
-  if (currentStepIndx > 8) state = "done";
+const FinalAcceptaion = ({ state }) => {
   return (
     <>
       <div className="left">
