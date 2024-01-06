@@ -67,6 +67,8 @@ const VisaFees = ({ id, state }) => {
           <p>Wait until put the amount of mony then pay it</p>
           <div>
             <button onClick={onSubmit}>Pay</button>
+            <span style={{ padding: "20px 0", fontWeight: "bold" }}>Or</span>
+
             <button
               onClick={() => {
                 setIsModalOpen(true);

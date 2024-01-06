@@ -41,7 +41,7 @@ function App() {
         })
           .then((res) => res.json())
           .then((data) => {
-            setNotifications(data.notifications);
+            if (data.notifications) setNotifications(data.notifications);
           })
           .catch((err) => console.log(err));
       }

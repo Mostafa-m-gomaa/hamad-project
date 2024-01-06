@@ -17,5 +17,5 @@ export const getRequestStateOrder = (step) => {
     "Done",
   ];
   const index = steps.indexOf(step);
-  return 100;
+  return index;
 };
