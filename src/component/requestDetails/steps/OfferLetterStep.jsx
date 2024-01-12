@@ -3,6 +3,7 @@ import Modal from "../../modal/Modal";
 import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
+import { useTranslation } from "react-i18next";
 
 const OfferLetterStep = ({ details, id, state }) => {
   const { offerLetter } = details;
@@ -37,14 +38,15 @@ const OfferLetterStep = ({ details, id, state }) => {
         setLoader(false);
       });
   };
+  const { t } = useTranslation();
 
   return (
     <>
       <div className="right">
         <div className="text">
           <StepState state={state} />
-          <h2>Sign offer letter</h2>
-          <p>sign offer letter and reupload the signed contact</p>
+          <h2>{t("signOfferLetter")}</h2>
+          <p>{t("offerLetterInstructions2")}</p>
           <div>
             <button
               disabled={offerLetter == null}
@@ -52,7 +54,7 @@ const OfferLetterStep = ({ details, id, state }) => {
                 setIsModalOpen(true);
               }}
             >
-              Upload signed offer letter
+              {t("uploadSignedOfferLetter")}
             </button>
           </div>
         </div>
@@ -64,19 +66,21 @@ const OfferLetterStep = ({ details, id, state }) => {
         }}
         isOpen={isModalOpen}
       >
-        <h2>Upload offer letter after you sign in</h2>
+        <h2>{t("uploadSignedOfferLetterInstructions")}</h2>
         <form onSubmit={onSubmit}>
-          <label htmlFor="offerLetter">Signed offer letter :*</label>
+          <label htmlFor="signedOfferLetter">
+            {t("signedOfferLetterLabel")}
+          </label>
           <input
             type="file"
-            id="offerLetter"
+            id="signedOfferLetter"
             required
             accept="application/pdf"
             onChange={(e) => {
               setFile(e.target.files[0]);
             }}
           />
-          <button className="submit">Upload</button>
+          <button className="submit">{t("upload")}</button>
         </form>
       </Modal>
     </>

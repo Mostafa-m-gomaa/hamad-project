@@ -3,6 +3,7 @@ import Modal from "../../modal/Modal";
 import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
+import { useTranslation } from "react-i18next";
 
 const ContractStep = ({ details, id, state }) => {
   const { contract } = details;
@@ -36,17 +37,15 @@ const ContractStep = ({ details, id, state }) => {
         setLoader(false);
       });
   };
+  const { t } = useTranslation();
 
   return (
     <>
       <div className="left">
         <div className="text">
           <StepState state={state} />
-          <h2>Sign Contract</h2>
-          <p>
-            Wait until the contract is uploaded by our admins and sign it and
-            reupload the signed contact
-          </p>
+          <h2>{t("signContract")}</h2>
+          <p>{t("contractInstructions")}</p>
           <div>
             <button
               onClick={() => {
@@ -54,7 +53,7 @@ const ContractStep = ({ details, id, state }) => {
               }}
               disabled={contract == null}
             >
-              Download Contact
+              {t("downloadContract")}
             </button>
             <button
               disabled={contract == null}
@@ -62,7 +61,7 @@ const ContractStep = ({ details, id, state }) => {
                 setIsModalOpen(true);
               }}
             >
-              Upload signed contract
+              {t("uploadSignedContract")}
             </button>
           </div>
         </div>
@@ -74,9 +73,9 @@ const ContractStep = ({ details, id, state }) => {
         }}
         isOpen={isModalOpen}
       >
-        <h2>Upload contact after you sign in</h2>
+        <h2>{t("uploadSignedContractInstructions")}</h2>
         <form onSubmit={onSubmit}>
-          <label htmlFor="signedContact">Signed contract :*</label>
+          <label htmlFor="signedContact">{t("signedContractLabel")}</label>
           <input
             type="file"
             id="signedContact"
@@ -86,7 +85,7 @@ const ContractStep = ({ details, id, state }) => {
               setFile(e.target.files[0]);
             }}
           />
-          <button className="submit">Upload</button>
+          <button className="submit">{t("upload")}</button>
         </form>
       </Modal>
     </>

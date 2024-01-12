@@ -3,10 +3,12 @@ import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
 import Modal from "../../modal/Modal";
+import { useTranslation } from "react-i18next";
 
 const RegistrationFees = ({ id, state }) => {
   const { setLoader, route } = useContext(AppContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [file, setFile] = useState(null);
   const onSubmit = () => {
     setLoader(true);
@@ -57,22 +59,25 @@ const RegistrationFees = ({ id, state }) => {
         setLoader(false);
       });
   };
+  const { t } = useTranslation();
   return (
     <>
       <div className="right">
         <div className="text">
           <StepState state={state} />
-          <h2>Pay Fees of Registration</h2>
-          <p>Wait until put the amount of mony then pay it</p>
+          <h2>{t("payRegistrationFees")}</h2>
+          <p>{t("registrationFeesInstructions")}</p>
           <div>
-            <button onClick={onSubmit}>Pay</button>{" "}
-            <span style={{ padding: "20px 0", fontWeight: "bold" }}>Or</span>
+            <button onClick={onSubmit}>{t("pay")}</button>{" "}
+            <span style={{ padding: "20px 0", fontWeight: "bold" }}>
+              {t("or")}
+            </span>
             <button
               onClick={() => {
                 setIsModalOpen(true);
               }}
             >
-              Upload fees bill of registration
+              {t("uploadRegistrationFeesBill")}
             </button>
           </div>
         </div>
@@ -84,9 +89,9 @@ const RegistrationFees = ({ id, state }) => {
         }}
         isOpen={isModalOpen}
       >
-        <h2>Upload fees bill of registration</h2>
+        <h2>{t("uploadRegistrationFeesBill")}</h2>
         <form onSubmit={onUpload}>
-          <label htmlFor="signedContact">Fees bill :*</label>
+          <label htmlFor="signedContact">{t("feesBillLabel")}</label>
           <input
             type="file"
             id="signedContact"
@@ -96,7 +101,7 @@ const RegistrationFees = ({ id, state }) => {
               setFile(e.target.files[0]);
             }}
           />
-          <button className="submit">Upload</button>
+          <button className="submit">{t("upload")}</button>
         </form>
       </Modal>
     </>

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AppContext } from "../../App";
+import { useTranslation } from "react-i18next";
 
 const Orders = ({ myData }) => {
   const [orders, setOrders] = useState([]);
@@ -18,22 +19,23 @@ const Orders = ({ myData }) => {
         .catch((err) => console.log(err));
     }
   }, [myData]);
+  const { t } = useTranslation();
   return (
     <div className="orders">
-      <h2>All request orders</h2>
+      <h2>{t("allRequestOrders")}</h2>
       <div className="table-container">
         <table>
           <thead>
             <tr>
-              <th>Paid</th>
-              <th>total price</th>
-              <th>order type </th>
+              <th>{t("paid")}</th>
+              <th>{t("totalPrice")}</th>
+              <th>{t("orderType")}</th>
             </tr>
           </thead>
           <tbody>
             {orders?.map((order) => (
               <tr key={order.id}>
-                <td>{order.isPaid ? "yes" : "no"}</td>
+                <td>{order.isPaid ? t("yes") : t("no")}</td>
                 <td>{order.totalOrderPrice}</td>
                 <td>{order.type}</td>
               </tr>

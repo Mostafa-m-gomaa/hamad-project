@@ -5,12 +5,14 @@ import { useState } from "react";
 import { AppContext } from "../../App";
 import UploadFileInput from "./UploadFileInput";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Bachelor = () => {
   const { login, setLogin, setLoader, route } = useContext(AppContext);
   const [countries, setCountries] = useState([]);
   const [services, setServices] = useState([]);
   const nav = useNavigate();
+  const { t } = useTranslation();
   const [values, setValues] = useState({
     cv: null,
     high: null,
@@ -23,31 +25,31 @@ const Bachelor = () => {
   });
   const inputs = [
     {
-      paragraph: "Click to upload CV",
+      paragraph: t("uploadCV"),
       name: "cv",
       type: "pdf",
       required: true,
     },
     {
-      paragraph: "Upload High School Certification",
+      paragraph: t("uploadHighSchoolCert"),
       name: "high",
       type: "pdf",
       required: true,
     },
     {
-      paragraph: "Click to upload Personal Picture",
+      paragraph: t("uploadPersonalPic"),
       name: "personal",
       type: "pdf",
       required: true,
     },
     {
-      paragraph: "Click to upload Passport",
+      paragraph: t("uploadPassport"),
       name: "passport",
       type: "pdf",
       required: true,
     },
     {
-      paragraph: "Upload Personal Statement (word file)",
+      paragraph: t("uploadPersonalStatement"),
       name: "statement",
       type: "word",
       required: true,
@@ -134,31 +136,27 @@ const Bachelor = () => {
   return (
     <div className="bachelor">
       <div className="container">
-        <h2>Apply to Bachelor</h2>
+        <h2> {t("apply_to_bachelor")}</h2>
         <form action="" onSubmit={handleSubmit}>
-          <div className="dropdown" tabIndex="0">
-            <div className="dropdown-btn" aria-haspopup="menu">
-              <span>
-                {values.country ? values.country : "Country Of Study"}
-              </span>
-              <span className="arrow"></span>
-            </div>
-            <ul className="dropdown-content" role="menu">
-              {countries.map((country) => (
-                <li key={country}>
-                  <div
-                    onClick={handleCountry}
-                    className={values.country === country ? "active" : ""}
-                  >
-                    {country.title}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <select
+            onChange={(e) => {
+              setValues((prev) => {
+                return { ...prev, country: e.target.value };
+              });
+            }}
+          >
+            <option value="">{t("country_of_study")}</option>
+            {countries.map((country) => (
+              <option key={country.id} value={country.id}>
+                {t("lang") === "ar" ? country.title_ar : country.title_en}
+              </option>
+            ))}
+          </select>
+
           <div className="requireRow">
             <div className="require">
-              riquire specialization
+              {t("require_specialization")}
+
               <textarea
                 onChange={(e) =>
                   setValues({ ...values, require: e.target.value })
@@ -169,16 +167,18 @@ const Bachelor = () => {
               ></textarea>
             </div>
             <div className="require">
-              Additional Service
+              {t("additional_service")}
               {services.map((service) => (
-                <div key={service.title}>
+                <div key={service.title_en}>
                   <input
                     type="checkbox"
                     name="services"
-                    id={service.title}
-                    value={service.title}
+                    id={service.title_en}
+                    value={service.title_en}
                   />
-                  <label htmlFor={service.title}>{service.title}</label>
+                  <label htmlFor={service.title_en}>
+                    {t("lang") === "ar" ? service.title_ar : service.title_en}
+                  </label>
                 </div>
               ))}
             </div>
@@ -198,7 +198,7 @@ const Bachelor = () => {
 
           <button className="btn-31" type="submit">
             <span className="text-container">
-              <span className="text">Apply</span>
+              <span className="text">{t("apply")}</span>
             </span>
           </button>
         </form>

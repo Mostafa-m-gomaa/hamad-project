@@ -3,6 +3,7 @@ import { AppContext } from "../../App";
 import "./notifications.css";
 import { IoIosNotifications } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const Notifications = () => {
   const { notifications, setNotifications, route, setLoader } =
     useContext(AppContext);
@@ -54,10 +55,11 @@ const Notifications = () => {
         });
     }
   };
+  const { t } = useTranslation();
   return (
     <div className="notifications container">
       <button className="reade-all" onClick={makeAllRead}>
-        Mark all as read
+        {t("mark_all_as_read")}
       </button>
       {notifications.map((notification) => {
         return (

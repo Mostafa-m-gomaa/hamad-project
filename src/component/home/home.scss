@@ -9,21 +9,10 @@
     margin-bottom: 2rem;
   }
   .countriesContainer {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    @media (max-width: 1200px) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    @media (max-width: 900px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 600px) {
-      grid-template-columns: repeat(1, 1fr);
-    }
     .countryCard {
-      margin-top: 10px;
-      margin-bottom: 10px;
+      background-color: white;
+      margin-top: 20px;
+      margin-bottom: 20px;
       padding: 10px;
       border: 1px solid gray;
       border-radius: 10px;
@@ -31,6 +20,41 @@
       -moz-border-radius: 10px;
       -ms-border-radius: 10px;
       -o-border-radius: 10px;
+      // display: flex;
+      // align-items: center;
+
+      img {
+        margin: auto;
+        width: 50%;
+        min-width: 300px;
+        border-radius: 10px;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        -ms-border-radius: 10px;
+        -o-border-radius: 10px;
+      }
+      @media (max-width: 700px) {
+        flex-direction: column;
+      }
+      .data {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .contentContainer {
+        width: 100%;
+        text-align: start;
+        ul {
+          list-style: disc;
+          padding: 10;
+        }
+        ol {
+          list-style: decimal;
+          padding: 10;
+        }
+      }
       .icon {
         padding: 20px;
         width: fit-content;

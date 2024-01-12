@@ -1,14 +1,16 @@
+import { useTranslation } from "react-i18next";
 import StepState from "./StepState";
 
 const MohereApproval = ({ id, state, details }) => {
+  const { t } = useTranslation();
   const { MOHEREApproval } = details;
   return (
     <>
       <div className="right">
         <div className="text">
           <StepState state={state} />
-          <h2>Download mohere approval</h2>
-          <p>wait until we get mohere approval and upload it</p>
+          <h2>{t("downloadMohereApproval")}</h2>
+          <p>{t("mohereApprovalInstructions")}</p>
           <div>
             <button
               disabled={!MOHEREApproval}
@@ -17,7 +19,7 @@ const MohereApproval = ({ id, state, details }) => {
                 window.open(MOHEREApproval);
               }}
             >
-              download mohere approval
+              {t("downloadMohereApprovalButton")}
             </button>
           </div>
         </div>

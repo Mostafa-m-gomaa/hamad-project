@@ -7,6 +7,7 @@ import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 const Profile = () => {
   const { setLoader, setLogin, route } = useContext(AppContext);
@@ -48,7 +49,7 @@ const Profile = () => {
                 setRequests(data.data);
               }
             });
-        } else if (data.data.type === "phd") {
+        } else if (data.data.type === "PHD") {
           fetch(`${route}/phd`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -64,7 +65,7 @@ const Profile = () => {
         }
       });
   }, []);
-  console.log(requests);
+  const { t } = useTranslation();
   return (
     <div className="profile">
       <div className="container">
@@ -76,7 +77,7 @@ const Profile = () => {
           <div className="wave"></div>
 
           <div className="infotop">
-            Welcome <br />
+            {t("welcome")} <br />
             {user?.username}
             <br />
             {user?.email}
@@ -84,15 +85,21 @@ const Profile = () => {
           </div>
         </div>
         <div className="requests">
-          <h2>Requests</h2>
+          <h2>{t("requests")}</h2>
           <div className="cards">
             {requests.map((request) => (
               <div key={request.id} className="request-card">
-                <h3>Request State : {request.Eligibility}</h3>
+                <h3>
+                  {t("request_state")} : {request.Eligibility}
+                </h3>
                 {request.Eligibility === "pending" ? null : (
-                  <div>Current Step : {request.currentStep} </div>
+                  <div>
+                    {t("request_step")} : {request.currentStep}{" "}
+                  </div>
                 )}
-                <Link to={`/request-details/${request.id}`}>Details</Link>
+                <Link to={`/request-details/${request.id}`}>
+                  {t("details")}
+                </Link>
               </div>
             ))}
           </div>

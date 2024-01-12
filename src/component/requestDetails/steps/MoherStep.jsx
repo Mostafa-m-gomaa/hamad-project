@@ -3,6 +3,7 @@ import Modal from "../../modal/Modal";
 import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
+import { useTranslation } from "react-i18next";
 
 const MohereStep = ({ id, state }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,21 +38,22 @@ const MohereStep = ({ id, state }) => {
         setLoader(false);
       });
   };
+  const { t } = useTranslation();
 
   return (
     <>
       <div className="left">
         <div className="text">
           <StepState state={state} />
-          <h2>Upload mohere</h2>
-          <p>Upload your mohere</p>
+          <h2>{t("uploadMohere")}</h2>
+          <p>{t("mohereInstructions")}</p>
           <div>
             <button
               onClick={() => {
                 setIsModalOpen(true);
               }}
             >
-              Upload mohere
+              {t("uploadMohere")}
             </button>
           </div>
         </div>
@@ -63,19 +65,19 @@ const MohereStep = ({ id, state }) => {
         }}
         isOpen={isModalOpen}
       >
-        <h2>Upload Mohere</h2>
+        <h2>{t("uploadMohereInstructions")}</h2>
         <form onSubmit={onSubmit}>
-          <label htmlFor="mohereFile">Mohere :</label>
+          <label htmlFor="mohere">{t("mohereLabel")}</label>
           <input
             type="file"
-            id="mohereFile"
+            id="mohere"
             required
             accept="application/pdf"
             onChange={(e) => {
               setFile(e.target.files[0]);
             }}
           />
-          <button className="submit">Upload</button>
+          <button className="submit">{t("upload")}</button>
         </form>
       </Modal>
     </>

@@ -17,7 +17,27 @@ import Master from "./component/bachelor/Master";
 import PHD from "./component/bachelor/PHD";
 import RequestDetails from "./component/requestDetails/RequestDetails";
 import Notifications from "./component/notifications/Notifications";
-import GoogleTranslate from "./component/GoogleTranslate";
+import ContactUs from "./component/contactus/Contactus";
+import WhoWeAre from "./whoWeAre/WhoWeAre";
+import enTranslation from "./translations/en.json";
+import arTranslation from "./translations/ar.json";
+import i18next from "i18next";
+import { initReactI18next, useTranslation } from "react-i18next";
+import Footer from "./component/footer/Footer";
+import TermsOfService from "./component/terms/TermsOfService";
+import PrivacyPolicy from "./component/terms/PrivacyPolicy";
+import ReturnsPolicy from "./component/terms/ReturnsPolicy";
+i18next.use(initReactI18next).init({
+  resources: {
+    en: { translation: enTranslation },
+    ar: { translation: arTranslation },
+  },
+  lng: "en",
+  fallbackLng: "en,ar",
+  interpolation: {
+    escapeValue: false,
+  },
+});
 export const AppContext = createContext();
 function App() {
   const [login, setLogin] = useState(false);
@@ -60,6 +80,21 @@ function App() {
     AOS.init();
   }, []);
 
+  const { i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+  useEffect(() => {
+    if (!localStorage.getItem("lang")) {
+      localStorage.setItem("lang", "en");
+      changeLanguage("en");
+      document.body.style.direction = "ltr";
+    }
+    if (localStorage.getItem("lang") === "ar") {
+      changeLanguage("ar");
+      document.body.style.direction = "rtl";
+    }
+  }, []);
   return (
     <AppContext.Provider
       value={{
@@ -97,12 +132,18 @@ function App() {
           <Route path="/verify" element={<Verify />} />
           <Route path="/apply" element={<Apply />} />
           <Route path="/bachelor" element={<Bachelor />} />
-          <Route path="/master" element={<Master />} />
           <Route path="/phd" element={<PHD />} />
+          <Route path="/master" element={<Master />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/request-details/:id" element={<RequestDetails />} />
           <Route path="/notifications" element={<Notifications />} />
+          <Route path="/request-details/:id" element={<RequestDetails />} />
+          <Route path="/who-we-are" element={<WhoWeAre />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/returns-policy" element={<ReturnsPolicy />} />
         </Routes>
+        <Footer />
       </>
     </AppContext.Provider>
   );

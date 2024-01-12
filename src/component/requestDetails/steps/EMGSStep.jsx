@@ -1,23 +1,24 @@
+import { useTranslation } from "react-i18next";
 import StepState from "./StepState";
 
 const EMGSStep = ({ state, details }) => {
+  const { t } = useTranslation();
   const { EMGS } = details;
   return (
     <>
-      <div className="left">
+      <div className="right">
         <div className="text">
           <StepState state={state} />
-          <h2>EMGS Approval</h2>
-          <p>wait until we get EMGS Approval</p>
+          <h2>{t("emgsApproval")}</h2>
+          <p>{t("emgsApprovalInstructions")}</p>
           <div>
             <button
               disabled={!EMGS}
               onClick={() => {
-                // setIsModalOpen(true);
                 window.open(EMGS);
               }}
             >
-              download EMGS
+              {t("downloadEmgs")}
             </button>
           </div>
         </div>

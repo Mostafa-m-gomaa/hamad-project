@@ -10,6 +10,20 @@
   flex-direction: column;
   gap: 50px;
 }
+.bachelor .container select {
+  background-color: #1d1f24;
+  color: white;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
 .bachelor .container h2 {
   font-size: 30px;
   background-color: var(--my-color);

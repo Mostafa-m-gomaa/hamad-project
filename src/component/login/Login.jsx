@@ -7,13 +7,14 @@ import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const history = useNavigate();
   const { setLoader, setLogin, route } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { t } = useTranslation();
   const handleLogin = async (event) => {
     event.preventDefault();
     setLoader(true);
@@ -51,35 +52,35 @@ const Login = () => {
 
   return (
     <div className="login">
-      <div class="container">
-        <div class="heading">Sign In</div>
-        <form action="" class="form" onSubmit={handleLogin}>
+      <div className="container">
+        <div className="heading">{t("sign_in")}</div>
+        <form action="" className="form" onSubmit={handleLogin}>
           <input
             required=""
-            class="input"
+            className="input"
             type="email"
             id="email"
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="E-mail"
+            placeholder={t("email")}
           />
           <input
             required=""
-            class="input"
+            className="input"
             type="password"
             name="password"
             onChange={(e) => setPassword(e.target.value)}
             id="password"
-            placeholder="Password"
+            placeholder={t("password")}
           />
-          {/* <span class="forgot-password"><a href="#">Forgot Password ?</a></span> */}
-          <input class="login-button" type="submit" value="Sign In" />
-          <span class="agreement">you haven`t account</span>
-          <Link to="/sign-up" class="login-button">
-            Sign Up
+          {/* <span className="forgot-password"><a href="#">Forgot Password ?</a></span> */}
+          <input className="login-button" type="submit" value={t("sign_in")} />
+          <span className="agreement">{t("have_no_account")}</span>
+          <Link to="/sign-up" className="login-button">
+            {t("sign_up")}
           </Link>
         </form>
-        <span class="agreement">
-          <a href="#">Learn user licence agreement</a>
+        <span className="agreement">
+          <a href="#">{t("learn_licence")}</a>
         </span>
       </div>
     </div>

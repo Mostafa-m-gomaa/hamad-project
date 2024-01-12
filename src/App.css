@@ -3,9 +3,28 @@
   width: 100%;
 }
 .container {
-  width: 96%;
-  margin: auto;
-  text-align: center;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+/* Small */
+@media (min-width: 768px) {
+  .container {
+    width: 750px !important;
+  }
+}
+/* Medium */
+@media (min-width: 992px) {
+  .container {
+    width: 970px !important;
+  }
+}
+/* Large */
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px !important;
+  }
 }
 body {
   background-color: #e2e5e7;
@@ -162,4 +181,23 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
+}
+.react-tel-input {
+  direction: ltr !important;
+  margin-top: 15px;
+  box-shadow: #cff0ff 0px 10px 10px -5px;
+  border: none !important;
+  text-align: start !important;
+}
+.react-tel-input .form-control {
+  border: none !important;
+  padding: 30px 10px 30px 60px !important;
+  border-radius: 100px !important;
+  -webkit-border-radius: 100px !important;
+  -moz-border-radius: 100px !important;
+  -ms-border-radius: 100px !important;
+  -o-border-radius: 100px !important;
+}
+.react-tel-input .selected-flag {
+  width: 50px !important;
 }

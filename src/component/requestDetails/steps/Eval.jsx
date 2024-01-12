@@ -1,23 +1,24 @@
+import { useTranslation } from "react-i18next";
 import StepState from "./StepState";
 
 const Eval = ({ id, state, details }) => {
   const { EVAL } = details;
+  const { t } = useTranslation();
   return (
     <>
       <div className="left">
         <div className="text">
           <StepState state={state} />
-          <h2>Download EVAL</h2>
-          <p>wait until we get EVAL and upload it</p>
+          <h2>{t("downloadEval")}</h2>
+          <p>{t("evalInstructions")}</p>
           <div>
             <button
               disabled={!EVAL}
               onClick={() => {
-                // setIsModalOpen(true);
                 window.open(EVAL);
               }}
             >
-              download EVAL
+              {t("downloadEvalButton")}
             </button>
           </div>
         </div>

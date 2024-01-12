@@ -5,9 +5,14 @@ import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
+import { countries } from "../../data/countries";
+import "react-phone-input-2/lib/style.css";
+import PhoneInput from "react-phone-input-2";
 
 const SignUp = () => {
   const history = useNavigate();
+  const { t } = useTranslation();
   const { route, setLoader } = useContext(AppContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +20,8 @@ const SignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [phone, setPhone] = useState("");
-
+  const [country, setCountry] = useState("");
+  console.log(countries);
   const handleLogin = async (event) => {
     event.preventDefault();
     setLoader(true);
@@ -29,6 +35,7 @@ const SignUp = () => {
           username: userName,
           phone: phone,
           passwordConfirm: confirmPassword,
+          country: country,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -52,53 +59,58 @@ const SignUp = () => {
   return (
     <div className="login">
       <div className="container">
-        <div className="heading">Sign Up</div>
+        <div className="heading">{t("sign_up")}</div>
         <form action="" className="form" onSubmit={handleLogin}>
           <input
-            required=""
+            required
             onChange={(e) => setUserName(e.target.value)}
             className="input"
-            name="email"
-            id="email"
-            placeholder="User Name"
+            placeholder={t("name")}
           />
           <input
-            required=""
+            required
             onChange={(e) => setEmail(e.target.value)}
             className="input"
             type="email"
-            name="email"
-            id="email"
-            placeholder="E-mail"
+            placeholder={t("email")}
           />
-          <input
-            required=""
-            onChange={(e) => setPhone(e.target.value)}
+          <PhoneInput
+            value={phone}
+            country={"eg"}
+            onChange={(value) => setPhone(value)}
+          />
+
+          <select
+            onChange={(e) => setCountry(e.target.value)}
             className="input"
-            type="text"
-            name="phone"
-            id="phone"
-            placeholder="phone"
-          />
+            required
+          >
+            <option value="">{t("country")}</option>
+            {countries.map((country) => (
+              <option value={country.value} key={country.value}>
+                {country.value}
+              </option>
+            ))}
+          </select>
           <input
-            required=""
+            required
             onChange={(e) => setPassword(e.target.value)}
             className="input"
             type="password"
             name="password"
             id="password"
-            placeholder="Password-Confirm"
+            placeholder={t("password")}
           />
           <input
-            required=""
+            required
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="input"
             type="password"
             name="password"
             id="password"
-            placeholder="Password-Confirm"
+            placeholder={t("confirm_password")}
           />
-          <input className="login-button" type="submit" value="Sign up" />
+          <input className="login-button" type="submit" value={t("sign_up")} />
         </form>
       </div>
     </div>

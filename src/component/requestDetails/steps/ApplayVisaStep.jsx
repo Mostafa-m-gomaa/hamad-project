@@ -3,8 +3,10 @@ import Modal from "../../modal/Modal";
 import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
+import { useTranslation } from "react-i18next";
 
 const ApplayVisaStep = ({ id, state }) => {
+  const { t } = useTranslation();
   const { setLoader, route } = useContext(AppContext);
   const onSubmit = () => {
     setLoader(true);
@@ -34,9 +36,9 @@ const ApplayVisaStep = ({ id, state }) => {
       <div className="left">
         <div className="text">
           <StepState state={state} />
-          <h2>Apply for visa</h2>
+          <h2>{t("applyForVisa")}</h2>
           <div>
-            <button onClick={onSubmit}>Apply</button>
+            <button onClick={onSubmit}>{t("apply")}</button>
           </div>
         </div>
       </div>

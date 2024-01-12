@@ -19,6 +19,7 @@ import AirportPickUp from "./steps/AirportPickUp";
 import DoneStep from "./steps/DoneStep";
 import Orders from "./Orders";
 import MohereApproval from "./steps/MohereApproval";
+import { useTranslation } from "react-i18next";
 const RequestDetails = () => {
   const { setLoader, route } = useContext(AppContext);
   const [requestDetails, setRequestDetails] = useState({});
@@ -60,7 +61,7 @@ const RequestDetails = () => {
                 setRequest(data.data);
               }
             });
-        } else if (data.data.type === "phd") {
+        } else if (data.data.type === "PHD") {
           fetch(`${route}/phd/${id}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -101,10 +102,13 @@ const RequestDetails = () => {
     return state;
   };
   // ss
+  const { t } = useTranslation();
   return (
     <>
       <div className="timeline container">
-        <h2>Current state of step : {request.currentStep}</h2>
+        <h2>
+          {t("current_step_of_request")} : {request.currentStep}
+        </h2>
         <div className="timeline-content">
           <ContractStep
             state={getStepState(0)}
@@ -124,9 +128,9 @@ const RequestDetails = () => {
             id={id}
             state={getStepState(5)}
           />
-          <Eval details={requestDetails} id={id} state={getStepState(6)} />
-          <VisaFees id={id} state={getStepState(7)} />
-          <EMGSStep state={getStepState(8)} details={requestDetails} />
+          <VisaFees id={id} state={getStepState(6)} />
+          <EMGSStep state={getStepState(7)} details={requestDetails} />
+          <Eval details={requestDetails} id={id} state={getStepState(8)} />
           <RegistrationFees state={getStepState(9)} id={id} />
           <FinalAcceptaion state={getStepState(10)} details={requestDetails} />
           <TicketStep state={getStepState(11)} id={id} />

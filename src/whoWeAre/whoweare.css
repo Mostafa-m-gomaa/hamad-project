@@ -1,0 +1,46 @@
+.whoWeAre {
+  padding: 50px 0;
+  margin-top: 60px;
+}
+.whoWeAre .aboutUs,
+.whoWeAre .ourStory {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.whoWeAre .ourStory {
+  flex-direction: row-reverse;
+}
+.whoWeAre .aboutUs > div,
+.whoWeAre .ourStory > div {
+  width: 50%;
+}
+.whoWeAre h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.whoWeAre p {
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+.whoWeAre img {
+  max-width: 500px;
+  margin: auto;
+  border-radius: 5px;
+}
+@media (max-width: 768px) {
+  .whoWeAre .aboutUs,
+  .whoWeAre .ourStory {
+    flex-direction: column;
+  }
+  .whoWeAre .aboutUs > div,
+  .whoWeAre .ourStory > div {
+    width: 100%;
+  }
+  .whoWeAre img {
+    max-width: 80%;
+  }
+}

@@ -1,16 +1,16 @@
+import { useTranslation } from "react-i18next";
 import StepState from "./StepState";
 
 const GetOfferLetter = ({ details, state }) => {
   const { offerLetter } = details;
-
+  const { t } = useTranslation();
   return (
     <>
       <div className="left">
         <div className="text">
           <StepState state={state} />
-
-          <h2>Receive offer letter</h2>
-          <p>Wait until the offer letter is uploaded by our admins</p>
+          <h2>{t("receiveOfferLetter")}</h2>
+          <p>{t("offerLetterInstructions")}</p>
           <div>
             <button
               onClick={() => {
@@ -18,7 +18,7 @@ const GetOfferLetter = ({ details, state }) => {
               }}
               disabled={offerLetter == null}
             >
-              Download offer letter
+              {t("downloadOfferLetter")}
             </button>
           </div>
         </div>

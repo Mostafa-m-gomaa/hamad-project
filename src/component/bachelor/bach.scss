@@ -5,6 +5,19 @@
   background-color: rgb(226, 229, 231);
   min-height: 100vh;
   .container {
+    select {
+      background-color: #1d1f24;
+      color: white;
+      width: fit-content;
+      margin: auto;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+    }
     display: flex;
     flex-direction: column;
     gap: 50px;

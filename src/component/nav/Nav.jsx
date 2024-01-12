@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import "./nav.css";
 import { AppContext } from "../../App";
@@ -8,8 +8,7 @@ import { useNavigate } from "react-router-dom";
 import burger from "../../assets/burger.png";
 import { CgProfile } from "react-icons/cg";
 import { IoIosNotifications } from "react-icons/io";
-import GoogleTranslate from "../GoogleTranslate";
-import { FaEarthAfrica } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
 
 function Nav(props) {
   const history = useNavigate();
@@ -17,7 +16,17 @@ function Nav(props) {
   const { login, setLogin } = useContext(AppContext);
   const [active, setActive] = useState("");
   const [notRead, setNotRead] = useState(0);
-  const [translateOpen, setTranslateOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    if (lng === "ar") {
+      document.body.style.direction = "rtl";
+    } else {
+      document.body.style.direction = "ltr";
+    }
+    localStorage.setItem("lang", lng);
+  };
+
   const clickBurger = () => {
     document.querySelector(".nav .list").classList.toggle("list-show");
   };
@@ -69,39 +78,21 @@ function Nav(props) {
   }, [notifications]);
   return (
     <div className="nav">
-      <div
-        style={{
-          display: translateOpen ? "flex" : "none",
-        }}
-        className="googleTranslate"
-      >
-        <GoogleTranslate onClose={() => setTranslateOpen(false)} />
-      </div>
       <div className="container">
         <Link to={"/"}>
           <img src={logo} alt="" />
         </Link>
         <div className="list">
-          <Link onClick={clickOnLink} className="active" to="/">
-            Home
-          </Link>
-          <Link onClick={clickOnLink} to="/who-us">
-            Who Us
-          </Link>
-          <Link onClick={clickOnLink} to="/contact">
-            Contact Us
-          </Link>
-          <Link onClick={clickOnLink} to="/apply">
-            ِApply
-          </Link>
+          <NavLink to="/">{t("home")}</NavLink>
+          <NavLink to="/who-we-are">{t("who_we_are")}</NavLink>
+          <NavLink to="/contact">{t("contact_us")}</NavLink>
+          <NavLink to="/apply">ِ{t("apply")}</NavLink>
           {login ? (
             <Link onClick={logOut} to="/login">
-              Log Out
+              {t("log_out")}
             </Link>
           ) : (
-            <Link onClick={clickOnLink} to="/login">
-              Login
-            </Link>
+            <NavLink to="/login">{t("login")}</NavLink>
           )}
           {login ? (
             <Link onClick={clickOnLinkSvg} className="sv" to="/profile">
@@ -123,10 +114,13 @@ function Nav(props) {
             </Link>
           ) : null}
           <button
-            onClick={() => setTranslateOpen(true)}
+            onClick={() => {
+              changeLanguage(t("lang") === "ar" ? "en" : "ar");
+            }}
+            style={{ fontSize: "1.2rem" }}
             className="sv notificationsIcon"
           >
-            <FaEarthAfrica />
+            {t("lang") === "ar" ? "English" : "العربية"}
           </button>
         </div>
 

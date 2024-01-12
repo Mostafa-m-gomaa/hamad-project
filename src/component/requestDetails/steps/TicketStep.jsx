@@ -3,6 +3,7 @@ import Modal from "../../modal/Modal";
 import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
+import { useTranslation } from "react-i18next";
 
 const TicketStep = ({ id, state }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,20 +39,21 @@ const TicketStep = ({ id, state }) => {
       });
   };
 
+  const { t } = useTranslation();
   return (
     <>
       <div className="right">
         <div className="text">
           <StepState state={state} />
-          <h2>Upload ticket</h2>
-          <p>Upload your ticket</p>
+          <h2>{t("uploadTicket")}</h2>
+          <p>{t("uploadTicketInstructions")}</p>
           <div>
             <button
               onClick={() => {
                 setIsModalOpen(true);
               }}
             >
-              Upload Ticket
+              {t("uploadTicketButton")}
             </button>
           </div>
         </div>
@@ -63,9 +65,9 @@ const TicketStep = ({ id, state }) => {
         }}
         isOpen={isModalOpen}
       >
-        <h2>Upload Ticket</h2>
+        <h2>{t("uploadTicketModal")}</h2>
         <form onSubmit={onSubmit}>
-          <label htmlFor="myTicket">Ticket :</label>
+          <label htmlFor="myTicket">{t("ticketLabel")}</label>
           <input
             type="file"
             id="myTicket"
@@ -75,7 +77,7 @@ const TicketStep = ({ id, state }) => {
               setFile(e.target.files[0]);
             }}
           />
-          <button className="submit">Upload</button>
+          <button className="submit">{t("upload")}</button>
         </form>
       </Modal>
     </>

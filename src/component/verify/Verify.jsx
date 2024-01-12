@@ -5,11 +5,12 @@ import { AppContext } from "../../App";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const Verify = () => {
   const [verify, setVerify] = useState("");
   const { route, setToken, setLoader } = useContext(AppContext);
   const history = useNavigate();
-
+  const { t } = useTranslation();
   const handleVerify = async (event) => {
     event.preventDefault();
     setLoader(true);
@@ -41,18 +42,18 @@ const Verify = () => {
 
   return (
     <div className="verify">
-      <div class="card">
-        <span class="card__title">Verify Your Email</span>
+      <div className="card">
+        <span className="card__title">{t("verify_your_email")}</span>
 
-        <div class="card__form">
+        <div className="card__form">
           <input
             onChange={(e) => setVerify(e.target.value)}
             placeholder="Verify Code"
             type="text"
           />
-          <button onClick={handleVerify} class="sign-up">
+          <button onClick={handleVerify} className="sign-up">
             {" "}
-            Verify
+            {t("verify")}
           </button>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { AppContext } from "../../../App";
 import { toast } from "react-toastify";
 import StepState from "./StepState";
 import Modal from "../../modal/Modal";
+import { useTranslation } from "react-i18next";
 
 const VisaFees = ({ id, state }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,24 +58,25 @@ const VisaFees = ({ id, state }) => {
         setLoader(false);
       });
   };
+  const { t } = useTranslation();
   return (
     <>
-      <div className="right">
+      <div className="left">
         <div className="text">
           <StepState state={state} />
-
-          <h2>Pay Fees of Visa</h2>
-          <p>Wait until put the amount of mony then pay it</p>
+          <h2>{t("payVisaFees")}</h2>
+          <p>{t("visaFeesInstructions")}</p>
           <div>
-            <button onClick={onSubmit}>Pay</button>
-            <span style={{ padding: "20px 0", fontWeight: "bold" }}>Or</span>
-
+            <button onClick={onSubmit}>{t("pay")}</button>
+            <span style={{ padding: "20px 0", fontWeight: "bold" }}>
+              {t("or")}
+            </span>
             <button
               onClick={() => {
                 setIsModalOpen(true);
               }}
             >
-              Upload fees bill of visa
+              {t("uploadVisaFeesBill")}
             </button>
           </div>
         </div>
@@ -86,9 +88,9 @@ const VisaFees = ({ id, state }) => {
         }}
         isOpen={isModalOpen}
       >
-        <h2>Upload fees bill of visa</h2>
+        <h2>{t("uploadVisaFeesBill")}</h2>
         <form onSubmit={onUpload}>
-          <label htmlFor="signedContact">Fees bill :*</label>
+          <label htmlFor="signedContact">{t("feesBillLabel")}</label>
           <input
             type="file"
             id="signedContact"
@@ -98,7 +100,7 @@ const VisaFees = ({ id, state }) => {
               setFile(e.target.files[0]);
             }}
           />
-          <button className="submit">Upload</button>
+          <button className="submit">{t("upload")}</button>
         </form>
       </Modal>
     </>
