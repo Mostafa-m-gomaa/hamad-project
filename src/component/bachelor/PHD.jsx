@@ -185,7 +185,7 @@ const PHD = () => {
           >
             <option value="">{t("country_of_study")}</option>
             {countries.map((country) => (
-              <option key={country.id} value={country.id}>
+              <option key={country.id} value={country.title_en}>
                 {t("lang") === "ar" ? country.title_ar : country.title_en}
               </option>
             ))}

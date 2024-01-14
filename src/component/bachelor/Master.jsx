@@ -125,7 +125,6 @@ const Master = () => {
       formData.append("Passport", values.passport);
       formData.append("PersonalStatement", values.statement);
       formData.append("ResearchProposal", values.research);
-      formData.append("additionalService", values.additionalService);
       formData.append("CountryOfStudy", values.country);
       formData.append("additionalService", servicesss.join("/"));
       try {
@@ -186,7 +185,7 @@ const Master = () => {
           >
             <option value="">{t("country_of_study")}</option>
             {countries.map((country) => (
-              <option key={country.id} value={country.id}>
+              <option key={country.id} value={country.title_en}>
                 {t("lang") === "ar" ? country.title_ar : country.title_en}
               </option>
             ))}

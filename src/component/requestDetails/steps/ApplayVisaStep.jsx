@@ -10,7 +10,7 @@ const ApplayVisaStep = ({ id, state }) => {
   const { setLoader, route } = useContext(AppContext);
   const onSubmit = () => {
     setLoader(true);
-    fetch(`${route}/progress/applyForVisa/${id}`, {
+    fetch(`${route}/progress/applyForSEV/${id}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

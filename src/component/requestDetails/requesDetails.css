@@ -138,6 +138,16 @@
 .timeline-content .text div button:disabled,
 .timeline-content .text div a:disabled {
   background-color: #e2e5e7;
+  cursor: not-allowed;
+}
+.timeline-content .text div button:disabled:hover,
+.timeline-content .text div a:disabled:hover {
+  background-color: #e2e5e7;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
 }
 .timeline-content .text div button:hover,
 .timeline-content .text div a:hover {
