@@ -4,14 +4,15 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { AppContext } from "../../App";
 import UploadFileInput from "./UploadFileInput";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const PHD = () => {
+const PHD = ({ isNew }) => {
   const { login, setLogin, setLoader, route } = useContext(AppContext);
   const [countries, setCountries] = useState([]);
   const [services, setServices] = useState([]);
   const nav = useNavigate();
+  const params = useParams();
   const [values, setValues] = useState({
     cv: null,
     personal: null,
@@ -35,69 +36,66 @@ const PHD = () => {
       paragraph: t("uploadCV"),
       name: "cv",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadPersonalPic"),
       name: "personal",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadPassport"),
       name: "passport",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadPersonalStatement"),
       name: "statement",
       type: "word",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadEnglishTestResults"),
       name: "english",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadTwoRecommendationLetters"),
       name: "recommendation1",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadBachelorsDegreeCertificate"),
       name: "bachelor",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadMastersDegreeCertificate"),
       name: "master",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadResearchProposal"),
       name: "research",
       type: "word",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadExperienceLetter"),
       name: "experience",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
   ];
   const onFileChange = (event, name) => {
     const file = event.target.files[0];
     setValues({ ...values, [name]: file });
-  };
-  const handleCountry = (e) => {
-    setValues({ ...values, country: e.target.innerHTML });
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -111,37 +109,53 @@ const PHD = () => {
     });
     if (localStorage.getItem("token")) {
       const formData = new FormData();
-      formData.append("PersonalPicture", values.personal);
-      formData.append("CV", values.cv);
-      formData.append(
-        "BachelorsDegreeCertificateWithTranscript",
-        values.bachelor
-      );
-      formData.append("MastersDegreeCertificateWithTranscript", values.master);
-      formData.append("EnglishTestResults", values.english);
-      formData.append("TwoRecommendationLetters", values.recommendation1);
-      formData.append("ExperienceLetter", values.experience);
-      formData.append("PersonalStatement", values.statement);
-      formData.append("ResearchProposal", values.research);
-      formData.append("RequiredSpecialization", values.require);
-      formData.append("CountryOfStudy", values.country);
-      formData.append("Passport", values.passport);
-      formData.append("additionalService", servicesss.join("/"));
+      if (values.personal) formData.append("PersonalPicture", values.personal);
+      if (values.cv) formData.append("CV", values.cv);
+      if (values.bachelor)
+        formData.append(
+          "BachelorsDegreeCertificateWithTranscript",
+          values.bachelor
+        );
+      if (values.master)
+        formData.append(
+          "MastersDegreeCertificateWithTranscript",
+          values.master
+        );
+      if (values.english) formData.append("EnglishTestResults", values.english);
+      if (values.recommendation1)
+        formData.append("TwoRecommendationLetters", values.recommendation1);
+      if (values.experience)
+        formData.append("ExperienceLetter", values.experience);
+      if (values.statement)
+        formData.append("PersonalStatement", values.statement);
+      if (values.research) formData.append("ResearchProposal", values.research);
+      if (values.require)
+        formData.append("RequiredSpecialization", values.require);
+      if (values.country) formData.append("CountryOfStudy", values.country);
+      if (values.passport) formData.append("Passport", values.passport);
+      if (values.servicesss?.length)
+        formData.append("additionalService", servicesss.join("/"));
       try {
-        const response = await fetch(`${route}/phd`, {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }).then((res) => res.json());
-        console.log(response);
+        const response = await fetch(
+          `${route}/phd${isNew ? "" : `/${params.id}`}`,
+          {
+            method: isNew ? "POST" : "PUT",
+
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        ).then((res) => res.json());
         setLoader(false);
         if (response.message == "Request sent successfully") {
           toast.success("Request sent successfully");
           nav("/profile");
         } else if (response.status == "fail") {
           toast.error(response.message);
+        } else if (response.data.id) {
+          toast.success("Request updated successfully");
+          nav("/profile");
         }
       } catch (error) {
         console.error(error);
@@ -174,9 +188,10 @@ const PHD = () => {
   return (
     <div className="bachelor">
       <div className="container">
-        <h2>{t("apply_to_phd")}</h2>
+        <h2>{isNew ? t("apply_to_phd") : t("edit_your_request")}</h2>
         <form action="" onSubmit={handleSubmit}>
           <select
+            required={isNew}
             onChange={(e) => {
               setValues((prev) => {
                 return { ...prev, country: e.target.value };
@@ -200,6 +215,7 @@ const PHD = () => {
                 }
                 cols="35"
                 rows="5"
+                required={isNew}
                 placeholder="write here"
               ></textarea>
             </div>
@@ -229,6 +245,7 @@ const PHD = () => {
                 name={item.name}
                 onChange={onFileChange}
                 type={item.type}
+                required={item.required}
                 value={values[item.name]}
               />
             ))}
@@ -236,7 +253,7 @@ const PHD = () => {
 
           <button className="btn-31" type="submit">
             <span className="text-container">
-              <span className="text"> {t("apply")}</span>
+              <span className="text">{isNew ? t("apply") : t("update")}</span>
             </span>
           </button>
         </form>

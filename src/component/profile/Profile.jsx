@@ -66,6 +66,7 @@ const Profile = () => {
       });
   }, []);
   const { t } = useTranslation();
+  console.log(requests);
   return (
     <div className="profile">
       <div className="container">
@@ -97,9 +98,16 @@ const Profile = () => {
                     {t("request_step")} : {request.currentStep}{" "}
                   </div>
                 )}
-                <Link to={`/request-details/${request.id}`}>
-                  {t("details")}
-                </Link>
+                <div className="btns">
+                  <Link to={`/request-details/${request.id}`}>
+                    {t("details")}
+                  </Link>
+                  <Link
+                    to={`/${request.title.toLocaleLowerCase()}/${request.id}`}
+                  >
+                    {t("edit")}
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

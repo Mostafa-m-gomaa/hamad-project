@@ -120,5 +120,8 @@
   "additional_services": "خدمات إضافية",
   "returns_policy": "سياسة الإرجاع",
   "privacy_policy": "سياسة الخصوصية",
-  "terms_of_service": "شروط الخدمة"
+  "terms_of_service": "شروط الخدمة",
+  "edit": "تعديل",
+  "edit_your_request": "تعديل طلبك",
+  "update": "تحديث"
 }

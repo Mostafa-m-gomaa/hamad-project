@@ -4,14 +4,15 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { AppContext } from "../../App";
 import UploadFileInput from "./UploadFileInput";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const Bachelor = () => {
+const Bachelor = ({ isNew }) => {
   const { login, setLogin, setLoader, route } = useContext(AppContext);
   const [countries, setCountries] = useState([]);
   const [services, setServices] = useState([]);
   const nav = useNavigate();
+  const params = useParams();
   const { t } = useTranslation();
   const [values, setValues] = useState({
     cv: null,
@@ -28,39 +29,36 @@ const Bachelor = () => {
       paragraph: t("uploadCV"),
       name: "cv",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadHighSchoolCert"),
       name: "high",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadPersonalPic"),
       name: "personal",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadPassport"),
       name: "passport",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadPersonalStatement"),
       name: "statement",
       type: "word",
-      required: true,
+      required: isNew,
     },
   ];
   const onFileChange = (event, name) => {
     const file = event.target.files[0];
     setValues({ ...values, [name]: file });
-  };
-  const handleCountry = (e) => {
-    setValues({ ...values, country: e.target.innerHTML });
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -72,30 +70,32 @@ const Bachelor = () => {
     Array.from(checkboxes).map(function (checkbox) {
       return servicesss.push(checkbox.value);
     });
-    if (values.country == "") {
-      toast.error("you should select country");
-      setLoader(false);
-      return;
-    }
+
     if (localStorage.getItem("token")) {
       const formData = new FormData();
-      formData.append("CV", values.cv);
-      formData.append("HighSchoolCertificate", values.high);
-      formData.append("PersonalPicture", values.personal);
-      formData.append("Passport", values.passport);
-      formData.append("PersonalStatement", values.statement);
-      formData.append("CountryOfStudy", values.country);
-      formData.append("RequiredSpecialization", values.require);
-      formData.append("additionalService", servicesss.join("/"));
+      if (values.cv) formData.append("CV", values.cv);
+      if (values.high) formData.append("HighSchoolCertificate", values.high);
+      if (values.personal) formData.append("PersonalPicture", values.personal);
+      if (values.passport) formData.append("Passport", values.passport);
+      if (values.statement)
+        formData.append("PersonalStatement", values.statement);
+      if (values.country) formData.append("CountryOfStudy", values.country);
+      if (values.require)
+        formData.append("RequiredSpecialization", values.require);
+      if (values.servicesss?.length)
+        formData.append("additionalService", servicesss.join("/"));
 
       try {
-        const response = await fetch(`${route}/bachelor`, {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }).then((res) => res.json());
+        const response = await fetch(
+          `${route}/bachelor${isNew ? "" : `/${params.id}`}`,
+          {
+            method: isNew ? "POST" : "PUT",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        ).then((res) => res.json());
         console.log(response);
         setLoader(false);
         if (response.message == "Request sent successfully") {
@@ -103,6 +103,9 @@ const Bachelor = () => {
           nav("/profile");
         } else if (response.status == "fail") {
           toast.error(response.message);
+        } else if (response.data.id) {
+          toast.success("Request updated successfully");
+          nav("/profile");
         }
       } catch (error) {
         console.error(error);
@@ -136,9 +139,11 @@ const Bachelor = () => {
   return (
     <div className="bachelor">
       <div className="container">
-        <h2> {t("apply_to_bachelor")}</h2>
+        <h2>{isNew ? t("apply_to_bachelor") : t("edit_your_request")}</h2>
+
         <form action="" onSubmit={handleSubmit}>
           <select
+            required={isNew}
             onChange={(e) => {
               setValues((prev) => {
                 return { ...prev, country: e.target.value };
@@ -163,6 +168,7 @@ const Bachelor = () => {
                 }
                 cols="35"
                 rows="5"
+                required={isNew}
                 placeholder="write here"
               ></textarea>
             </div>
@@ -189,6 +195,7 @@ const Bachelor = () => {
                 key={item.name}
                 paragraph={item.paragraph}
                 name={item.name}
+                required={item.required}
                 onChange={onFileChange}
                 type={item.type}
                 value={values[item.name]}
@@ -198,7 +205,7 @@ const Bachelor = () => {
 
           <button className="btn-31" type="submit">
             <span className="text-container">
-              <span className="text">{t("apply")}</span>
+              <span className="text">{isNew ? t("apply") : t("update")}</span>
             </span>
           </button>
         </form>

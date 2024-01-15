@@ -120,5 +120,8 @@
   "additional_services": "Additional services",
   "terms_of_service": "Terms of service",
   "privacy_policy": "Privacy policy",
-  "returns_policy": "Returns policy"
+  "returns_policy": "Returns policy",
+  "edit": "Edit",
+  "update": "Update",
+  "edit_your_request": "Edit your request"
 }

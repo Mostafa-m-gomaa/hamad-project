@@ -5,12 +5,13 @@ import { useState } from "react";
 import { AppContext } from "../../App";
 import UploadFileInput from "./UploadFileInput";
 import { countries } from "../../data/data";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const Master = () => {
+const Master = ({ isNew }) => {
   const { login, setLogin, setLoader, route } = useContext(AppContext);
   const [countries, setCountries] = useState([]);
+  const params = useParams();
   const [services, setServices] = useState([]);
   const nav = useNavigate();
   const [values, setValues] = useState({
@@ -36,69 +37,66 @@ const Master = () => {
       paragraph: t("uploadCV"),
       name: "cv",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadHighSchoolCert"),
       name: "high",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadPersonalPic"),
       name: "personal",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadPassport"),
       name: "passport",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadPersonalStatement"),
       name: "statement",
       type: "word",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadEnglishTestResults"),
       name: "english",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadTwoRecommendationLetters"),
       name: "recommendation1",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadBachelorsDegreeCertificate"),
       name: "bachelor",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadResearchProposal"),
       name: "research",
       type: "word",
-      required: true,
+      required: isNew,
     },
     {
       paragraph: t("uploadExperienceLetter"),
       name: "experience",
       type: "pdf",
-      required: true,
+      required: isNew,
     },
   ];
   const onFileChange = (event, name) => {
     const file = event.target.files[0];
     setValues({ ...values, [name]: file });
-  };
-  const handleCountry = (e) => {
-    setValues({ ...values, country: e.target.innerHTML });
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -112,29 +110,37 @@ const Master = () => {
     });
     if (localStorage.getItem("token")) {
       const formData = new FormData();
-      formData.append("CV", values.cv);
-      formData.append("HighSchoolCertificate", values.high);
-      formData.append(
-        "BachelorsDegreeCertificateWithTranscript",
-        values.bachelor
-      );
-      formData.append("ExperienceLetter", values.experience);
-      formData.append("EnglishTestResults", values.english);
-      formData.append("TwoRecommendationLetters", values.recommendation1);
-      formData.append("PersonalPicture", values.personal);
-      formData.append("Passport", values.passport);
-      formData.append("PersonalStatement", values.statement);
-      formData.append("ResearchProposal", values.research);
-      formData.append("CountryOfStudy", values.country);
-      formData.append("additionalService", servicesss.join("/"));
+      if (values.cv) formData.append("CV", values.cv);
+      if (values.high) formData.append("HighSchoolCertificate", values.high);
+      if (values.bachelor)
+        formData.append(
+          "BachelorsDegreeCertificateWithTranscript",
+          values.bachelor
+        );
+      if (values.experience)
+        formData.append("ExperienceLetter", values.experience);
+      if (values.english) formData.append("EnglishTestResults", values.english);
+      if (values.recommendation1)
+        formData.append("TwoRecommendationLetters", values.recommendation1);
+      if (values.personal) formData.append("PersonalPicture", values.personal);
+      if (values.passport) formData.append("Passport", values.passport);
+      if (values.statement)
+        formData.append("PersonalStatement", values.statement);
+      if (values.research) formData.append("ResearchProposal", values.research);
+      if (values.country) formData.append("CountryOfStudy", values.country);
+      if (values.servicesss?.length)
+        formData.append("additionalService", servicesss.join("/"));
       try {
-        const response = await fetch(`${route}/master`, {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }).then((res) => res.json());
+        const response = await fetch(
+          `${route}/master${isNew ? "" : `/${params.id}`}`,
+          {
+            method: isNew ? "POST" : "PUT",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        ).then((res) => res.json());
         console.log(response);
         setLoader(false);
         if (response.message == "Request sent successfully") {
@@ -142,6 +148,9 @@ const Master = () => {
           nav("/profile");
         } else if (response.status == "fail") {
           toast.error(response.message);
+        } else if (response.data.id) {
+          toast.success("Request updated successfully");
+          nav("/profile");
         }
       } catch (error) {
         console.error(error);
@@ -174,9 +183,10 @@ const Master = () => {
   return (
     <div className="bachelor">
       <div className="container">
-        <h2>{t("apply_to_master")}</h2>
+        <h2>{isNew ? t("apply_to_master") : t("edit_your_request")}</h2>
         <form action="" onSubmit={handleSubmit}>
           <select
+            required={isNew}
             onChange={(e) => {
               setValues((prev) => {
                 return { ...prev, country: e.target.value };
@@ -200,6 +210,7 @@ const Master = () => {
                 }
                 cols="35"
                 rows="5"
+                required={isNew}
                 placeholder="write here"
               ></textarea>
             </div>
@@ -228,6 +239,7 @@ const Master = () => {
                 name={item.name}
                 onChange={onFileChange}
                 type={item.type}
+                required={item.required}
                 value={values[item.name]}
               />
             ))}
@@ -235,7 +247,7 @@ const Master = () => {
 
           <button className="btn-31" type="submit">
             <span className="text-container">
-              <span className="text">{t("apply")}</span>
+              <span className="text">{isNew ? t("apply") : t("update")}</span>
             </span>
           </button>
         </form>

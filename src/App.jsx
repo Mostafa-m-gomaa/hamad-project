@@ -131,9 +131,12 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/apply" element={<Apply />} />
-          <Route path="/bachelor" element={<Bachelor />} />
-          <Route path="/phd" element={<PHD />} />
-          <Route path="/master" element={<Master />} />
+          <Route path="/bachelor" element={<Bachelor isNew={true} />} />
+          <Route path="/phd" element={<PHD isNew={true} />} />
+          <Route path="/master" element={<Master isNew={true} />} />
+          <Route path="/bachelor/:id" element={<Bachelor isNew={false} />} />
+          <Route path="/phd/:id" element={<PHD isNew={false} />} />
+          <Route path="/master/:id" element={<Master isNew={false} />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/request-details/:id" element={<RequestDetails />} />
