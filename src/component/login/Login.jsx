@@ -1,11 +1,10 @@
-import React from "react";
 import "./login.css";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../../App";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 
@@ -74,10 +73,18 @@ const Login = () => {
           />
           {/* <span className="forgot-password"><a href="#">Forgot Password ?</a></span> */}
           <input className="login-button" type="submit" value={t("sign_in")} />
-          <span className="agreement">{t("have_no_account")}</span>
-          <Link to="/sign-up" className="login-button">
-            {t("sign_up")}
-          </Link>
+          <span className="agreement">
+            {t("have_no_account")}
+            <Link to="/sign-up" className="">
+              {t("sign_up")}
+            </Link>
+          </span>{" "}
+          <span className="agreement">
+            {t("do_you_forget_password")}
+            <Link to="/reset-password" className="">
+              {t("reset_password")}
+            </Link>
+          </span>
         </form>
         <span className="agreement">
           <a href="#">{t("learn_licence")}</a>

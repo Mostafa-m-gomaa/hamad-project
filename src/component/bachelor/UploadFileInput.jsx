@@ -1,11 +1,4 @@
-const UploadFileInput = ({
-  value,
-  onChange,
-  name,
-  paragraph,
-  type,
-  required,
-}) => {
+const UploadFileInput = ({ value, onChange, name, paragraph, type }) => {
   let accepted = "application/pdf";
 
   if (type === "word") {
@@ -44,7 +37,6 @@ const UploadFileInput = ({
         onChange={(e) => {
           onChange(e, name);
         }}
-        required={required}
         accept={accepted}
         type="file"
       />

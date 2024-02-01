@@ -26,6 +26,10 @@
     font-size: 30px;
     color: rgb(16, 137, 211);
   }
+  .instructions {
+    font-weight: 700;
+    font-size: 20px;
+  }
 
   .form {
     margin-top: 20px;
@@ -153,6 +157,7 @@
   .agreement a {
     text-decoration: none;
     color: #0099ff;
-    font-size: 9px;
+    padding: 0px 5px;
+    font-size: 14px;
   }
 }

@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
+import EditPasswordModal from "./EditPasswordModal";
+import EditDataModal from "./EditDataModal";
 
 const Profile = () => {
-  const { setLoader, setLogin, route } = useContext(AppContext);
+  const { route } = useContext(AppContext);
   const [user, setUser] = useState({});
   const [requests, setRequests] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetch(`${route}/users/getMe`, {
       headers: {
@@ -63,10 +65,13 @@ const Profile = () => {
               }
             });
         }
+      })
+      .catch(() => {
+        navigate("/login");
+        localStorage.removeItem("token");
       });
   }, []);
   const { t } = useTranslation();
-  console.log(requests);
   return (
     <div className="profile">
       <div className="container">
@@ -83,6 +88,12 @@ const Profile = () => {
             <br />
             {user?.email}
             <br />
+            {user?.phone}
+            <br />
+            {user?.country}
+            <br />
+            <EditPasswordModal />
+            <EditDataModal user={user} setUser={setUser} />
           </div>
         </div>
         <div className="requests">

@@ -13,6 +13,7 @@ const PHD = ({ isNew }) => {
   const [services, setServices] = useState([]);
   const nav = useNavigate();
   const params = useParams();
+  const [thisRequest, setThisRequest] = useState({});
   const [values, setValues] = useState({
     cv: null,
     personal: null,
@@ -133,7 +134,7 @@ const PHD = ({ isNew }) => {
         formData.append("RequiredSpecialization", values.require);
       if (values.country) formData.append("CountryOfStudy", values.country);
       if (values.passport) formData.append("Passport", values.passport);
-      if (values.servicesss?.length)
+      if (servicesss?.length)
         formData.append("additionalService", servicesss.join("/"));
       try {
         const response = await fetch(
@@ -185,10 +186,87 @@ const PHD = ({ isNew }) => {
       toast.error("you should login first");
     }
   }, []);
+  useEffect(() => {
+    if (!isNew) {
+      fetch(`${route}/phd/${params.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.data) {
+            setThisRequest(data.data);
+            console.log(data.data);
+          }
+        });
+    }
+  }, []);
+  const links = [
+    {
+      name: t("cv"),
+      link: thisRequest?.CV,
+    },
+    {
+      name: t("highSchoolCertificate"),
+      link: thisRequest?.HighSchoolCertificate,
+    },
+    {
+      name: t("passport"),
+      link: thisRequest?.Passport,
+    },
+    {
+      name: t("personalPicture"),
+      link: thisRequest?.PersonalPicture,
+    },
+    {
+      name: t("personalStatement"),
+      link: thisRequest?.PersonalStatement,
+    },
+    {
+      name: t("bachelorsDegreeCertificateWithTranscript"),
+      link: thisRequest?.BachelorsDegreeCertificateWithTranscript,
+    },
+    {
+      name: t("experienceLetter"),
+      link: thisRequest?.ExperienceLetter,
+    },
+    {
+      name: t("englishTestResults"),
+      link: thisRequest?.EnglishTestResults,
+    },
+    {
+      name: t("twoRecommendationLetters"),
+      link: thisRequest?.TwoRecommendationLetters,
+    },
+    {
+      name: t("researchProposal"),
+      link: thisRequest?.ResearchProposal,
+    },
+    {
+      name: t("mastersDegreeCertificateWithTranscript"),
+      link: thisRequest?.MastersDegreeCertificateWithTranscript,
+    },
+  ];
+  const renderLinks = () => {
+    return links.map((link) => {
+      return link.link ? (
+        <a href={link.link} key={link.name} target="_blank" rel="noreferrer">
+          {link.name}
+        </a>
+      ) : null;
+    });
+  };
   return (
     <div className="bachelor">
       <div className="container">
-        <h2>{isNew ? t("apply_to_phd") : t("edit_your_request")}</h2>
+        <h2>{isNew ? t("apply_to_phd") : t("edit_your_request")}</h2>{" "}
+        {isNew ? null : (
+          <div className="current_files">
+            <h3>{t("current_files")}</h3>
+            {renderLinks()}
+          </div>
+        )}
         <form action="" onSubmit={handleSubmit}>
           <select
             required={isNew}

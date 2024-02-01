@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { FaEarthAfrica } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
-const CountryCard = ({ country, ind }) => {
+const CountryCard = ({ country, ind, isServ }) => {
   const container = useRef(null);
   const { t } = useTranslation();
   const { image, title_ar, title_en, description_ar, description_en } = country;
@@ -29,6 +30,11 @@ const CountryCard = ({ country, ind }) => {
         </h3>
       </div>
       <div className="contentContainer" ref={container}></div>
+      {!isServ && (
+        <Link to="/apply" className="btn">
+          {t("apply_now")}
+        </Link>
+      )}
     </div>
   );
 };

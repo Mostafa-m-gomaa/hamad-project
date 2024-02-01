@@ -21,6 +21,10 @@
   font-size: 30px;
   color: rgb(16, 137, 211);
 }
+.login .instructions {
+  font-weight: 700;
+  font-size: 20px;
+}
 .login .form {
   margin-top: 20px;
 }
@@ -121,5 +125,6 @@
 .login .agreement a {
   text-decoration: none;
   color: #0099ff;
-  font-size: 9px;
+  padding: 0px 5px;
+  font-size: 14px;
 }/*# sourceMappingURL=login.css.map */

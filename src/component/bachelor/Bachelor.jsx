@@ -11,6 +11,7 @@ const Bachelor = ({ isNew }) => {
   const { login, setLogin, setLoader, route } = useContext(AppContext);
   const [countries, setCountries] = useState([]);
   const [services, setServices] = useState([]);
+  const [thisRequest, setThisRequest] = useState({});
   const nav = useNavigate();
   const params = useParams();
   const { t } = useTranslation();
@@ -82,9 +83,8 @@ const Bachelor = ({ isNew }) => {
       if (values.country) formData.append("CountryOfStudy", values.country);
       if (values.require)
         formData.append("RequiredSpecialization", values.require);
-      if (values.servicesss?.length)
+      if (servicesss?.length)
         formData.append("additionalService", servicesss.join("/"));
-
       try {
         const response = await fetch(
           `${route}/bachelor${isNew ? "" : `/${params.id}`}`,
@@ -135,12 +135,64 @@ const Bachelor = ({ isNew }) => {
       toast.error("you should login first");
     }
   }, []);
+  useEffect(() => {
+    if (!isNew) {
+      fetch(`${route}/bachelor/${params.id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.data) {
+            setThisRequest(data.data);
+            console.log(data.data);
+          }
+        });
+    }
+  }, []);
+  const links = [
+    {
+      name: t("cv"),
+      link: thisRequest?.CV,
+    },
+    {
+      name: t("highSchoolCertificate"),
+      link: thisRequest?.HighSchoolCertificate,
+    },
+    {
+      name: t("passport"),
+      link: thisRequest?.Passport,
+    },
+    {
+      name: t("personalPicture"),
+      link: thisRequest?.PersonalPicture,
+    },
+    {
+      name: t("personalStatement"),
+      link: thisRequest?.PersonalStatement,
+    },
+  ];
+  const renderLinks = () => {
+    return links.map((link) => {
+      return link.link ? (
+        <a href={link.link} key={link.name} target="_blank" rel="noreferrer">
+          {link.name}
+        </a>
+      ) : null;
+    });
+  };
 
   return (
     <div className="bachelor">
       <div className="container">
         <h2>{isNew ? t("apply_to_bachelor") : t("edit_your_request")}</h2>
-
+        {isNew ? null : (
+          <div className="current_files">
+            <h3>{t("current_files")}</h3>
+            {renderLinks()}
+          </div>
+        )}
         <form action="" onSubmit={handleSubmit}>
           <select
             required={isNew}

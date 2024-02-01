@@ -4,6 +4,43 @@
   padding-bottom: 50px;
   background-color: rgb(226, 229, 231);
   min-height: 100vh;
+  .current_files {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    h3 {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 25px;
+      font-weight: 700;
+      color: #1d1f24;
+    }
+    a {
+      background-color: #1d1f24;
+      color: white;
+      cursor: pointer;
+      width: fit-content;
+      padding: 10px 15px;
+      border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -o-border-radius: 5px;
+      transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -ms-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      border: 1px solid #1d1f24;
+      &:hover {
+        color: #1d1f24;
+        border: 1px solid #1d1f24;
+        background-color: white;
+      }
+    }
+  }
   .container {
     select {
       background-color: #1d1f24;

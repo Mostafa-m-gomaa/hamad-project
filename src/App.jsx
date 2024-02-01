@@ -27,6 +27,11 @@ import Footer from "./component/footer/Footer";
 import TermsOfService from "./component/terms/TermsOfService";
 import PrivacyPolicy from "./component/terms/PrivacyPolicy";
 import ReturnsPolicy from "./component/terms/ReturnsPolicy";
+import Resetpassword from "./component/login/Resetpassword";
+import Resetcode from "./component/login/ResetCode";
+import ResetPassword from "./component/login/Resetpassword";
+import ResetCode from "./component/login/ResetCode";
+import NewPassword from "./component/login/NewPassword";
 i18next.use(initReactI18next).init({
   resources: {
     en: { translation: enTranslation },
@@ -67,14 +72,6 @@ function App() {
       }
     };
     getNotification();
-
-    const inter = setInterval(() => {
-      getNotification();
-    }, 10000);
-
-    return () => {
-      clearInterval(inter);
-    };
   }, [localStorage.getItem("token"), login, route]);
   useEffect(() => {
     AOS.init();
@@ -145,6 +142,9 @@ function App() {
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/returns-policy" element={<ReturnsPolicy />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/reset-code" element={<ResetCode />} />
+          <Route path="/new-password" element={<NewPassword />} />
         </Routes>
         <Footer />
       </>
