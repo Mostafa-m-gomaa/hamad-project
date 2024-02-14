@@ -134,7 +134,7 @@ const Bachelor = ({ isNew }) => {
           }
         });
     } else {
-      toast.error("you should login first");
+      nav("/login");
     }
   }, []);
   useEffect(() => {
