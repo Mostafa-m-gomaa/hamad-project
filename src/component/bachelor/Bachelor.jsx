@@ -97,7 +97,6 @@ const Bachelor = ({ isNew }) => {
           }
         ).then((res) => res.json());
         console.log(response);
-        setLoader(false);
         if (response.message == "Request sent successfully") {
           toast.success("Request sent successfully");
           nav("/profile");
@@ -109,6 +108,9 @@ const Bachelor = ({ isNew }) => {
         }
       } catch (error) {
         console.error(error);
+        toast.success("Something when wrong!");
+      } finally {
+        setLoader(false);
       }
     } else {
       toast.error("you should login first");

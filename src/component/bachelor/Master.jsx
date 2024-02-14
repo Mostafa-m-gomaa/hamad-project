@@ -142,8 +142,6 @@ const Master = ({ isNew }) => {
             },
           }
         ).then((res) => res.json());
-        console.log(response);
-        setLoader(false);
         if (response.message == "Request sent successfully") {
           toast.success("Request sent successfully");
           nav("/profile");
@@ -152,9 +150,13 @@ const Master = ({ isNew }) => {
         } else if (response.data.id) {
           toast.success("Request updated successfully");
           nav("/profile");
+        } else {
+          toast.error("Something went wrong");
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoader(false);
       }
     } else {
       toast.error("you should login first");
